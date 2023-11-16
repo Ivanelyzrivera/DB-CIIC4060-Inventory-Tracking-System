@@ -8,7 +8,7 @@ class UserHandler:
         result = {}
         result['U_ID'] = t[0]
         result['U_FirstName'] = t[1]
-        result['U_LastName']: t[2]
+        result['U_LastName'] = t[2]
         result['U_Email'] = t[3]
         result['U_Password'] = t[4]
         result['U_Salary'] = t[5]

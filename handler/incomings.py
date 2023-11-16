@@ -1,7 +1,7 @@
 from flask import jsonify
 from dao.incomings import IncomingDAO
 
-class RackHandler:
+class IncomingHandler:
     
 
     def mapToDict(self,t):
