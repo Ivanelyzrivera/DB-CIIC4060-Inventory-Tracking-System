@@ -21,6 +21,6 @@ class TransactionHandler:
 			for e in dbtuples:
 				result.append(self.mapToDict(e))
 			return jsonify(result)
-        except Exception as e:
-            print(f"An error occurred while getting all transactions: {e}")
-            return jsonify({'error': 'An error occurred while retrieving transactions'}), 500
+		except Exception as e:
+			print(f"An error occurred while getting all transactions: {e}")
+			return jsonify({'error': 'An error occurred while retrieving transactions'}), 500
