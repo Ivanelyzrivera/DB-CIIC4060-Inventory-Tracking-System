@@ -9,11 +9,10 @@ CORS(app)
 
 @app.route('/')
 def greeting():
-    return 'Hello, this is a test file asdasd'
-
-@app.route('/DB_Project/getAllparts')
-def getAllParts():
-    return PartHandler().getAllParts()
+    return 'Hello, this is a test file'
+# @app.route('/DB_Project/getAllparts')
+# def getAllParts():
+#     return PartHandler().getAllParts()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
