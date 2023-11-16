@@ -13,9 +13,21 @@ CORS(app)
 def greeting():
     return 'Hello, this is a test file'
 
-@app.route('/DB_Project/Allparts')
+@app.route('/DB_Project/Allparts',methods=['GET', 'POST'])
 def getAllParts():
-    return PartHandler().getAllParts()
+    if request.method == 'GET':
+        return PartHandler().getAllParts()
+    elif request.method == 'POST':
+        data = request.json
+        return PartHandler().insertPart(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/DB_Project/parts/<int:pid>')
+def getpartbyID(pid):
+    return PartHandler().getpartbyID(pid)
+
+
 
 @app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():
