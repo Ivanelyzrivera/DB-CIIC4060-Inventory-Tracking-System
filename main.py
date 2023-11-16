@@ -2,6 +2,7 @@ from flask import Flask, jsonify,request
 from flask_cors import CORS,cross_origin
 from handler.parts import PartHandler
 from handler.suppliers import SupplierHandler
+from handler.warehouse import WarehouseHandler
 
 
 app = Flask(__name__)
@@ -20,6 +21,10 @@ def getAllParts():
 @app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():
     return SupplierHandler().getAllSuppliers()
+
+@app.route('/DB_Project/Allwarehouses')
+def getAllWarehouses():
+    return WarehouseHandler().getAllWarehouses()
 
 
 if __name__ == '__main__':
