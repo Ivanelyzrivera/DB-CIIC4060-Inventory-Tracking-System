@@ -20,7 +20,7 @@ class UserHandler:
 
 
     def getAllUsers(self):
-        dao = UsersDAO()
+        dao = UserDAO()
         try:
             dbtuples = dao.getAllUsers()
             result = []

@@ -16,7 +16,7 @@ class RackHandler:
 
 
     def getAllRacks(self):
-        dao = RacksDAO()
+        dao = RackDAO()
         try:
             dbtuples = dao.getAllRacks()
             result = []
