@@ -58,6 +58,37 @@ class PartHandler:
             dao = PartDAO()
             pid = dao.insertPart(type,color,weight,name,price,manufacturer,supplierID)
             data['P_ID'] = pid
-            return "OK",201
+            return jsonify(data),201
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
+        
+
+    def deleteById(self, pid):
+        dao = PartDAO()
+        result = dao.deleteById(pid)
+        if result :
+            return jsonify("Delete was Succesful"),200
+        else:
+            return jsonify("Not found"), 404
+
+    def putById(self,pid ,data):
+        type = data['P_Type']
+        color = data['P_Color']
+        weight = data['P_Weight']
+        name = data['P_Name']
+        price = data['P_Price']
+        manufacturer = data['P_Manufacturer']
+        supplierID = data['S_ID']
+        if pid and type and color and weight and name and price and manufacturer and supplierID:
+            dao = PartDAO()
+            flag = dao.putById(pid,type,color,weight,name,price,manufacturer,supplierID)
+            if flag:
+                return jsonify(data),201
+            else:
+                return jsonify ("Not Found"),400
+        else:
+            return jsonify("Bad Data or Unexpected attribute values, "), 400
+        
+
+        
+

@@ -12,7 +12,7 @@ class UserDAO:
     
     def getAllUsers(self):
         cursor = self.conn.cursor()
-        query = "SELECT U_ID, U_FirstName, U_LastName, U_Email, U_Password, U_Salary, U_HireDate, U_Position, W_ID FROM User;"
+        query = "SELECT U_ID, U_FirstName, U_LastName, U_Email, U_Password, U_Salary, U_HireDate, U_Position, W_ID FROM Users;"
         try:
             cursor.execute(query)
             result = []

@@ -21,7 +21,7 @@ CORS(app)
 def greeting():
     return 'Hello, this is a test file'
 
-@app.route('/DB_Project/Allparts',methods=['GET', 'POST'])
+@app.route('/parts',methods=['GET', 'POST'])
 def getAllParts():
     if request.method == 'GET':
         return PartHandler().getAllParts()
@@ -31,8 +31,20 @@ def getAllParts():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/DB_Project/parts/<int:pid>')
+@app.route('/parts/<int:pid>',methods = ['GET','PUT','DELETE'])
 def getpartbyID(pid):
+    if request.method == 'GET':
+         return PartHandler().getpartbyID(pid)
+    elif request.method == 'DELETE':
+         return PartHandler().deleteById(pid)
+    elif request.method == 'PUT':
+         data = request.json
+         return PartHandler().putById(pid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+         
+
+         
     return PartHandler().getpartbyID(pid)
 
 

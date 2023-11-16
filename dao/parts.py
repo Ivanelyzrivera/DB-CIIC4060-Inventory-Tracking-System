@@ -44,3 +44,19 @@ class PartDAO:
         P_ID = cursor.fetchone()[0]
         self.conn.commit()
         return P_ID
+    
+    def deleteById(self, pid):
+        cursor = self.conn.cursor()
+        query = " delete FROM Part where p_id =%s"
+        cursor.execute(query, (pid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
+        
+    def putById(self,pid ,type,color,weight,name,price,manufacturer,supplierID):
+        cursor = self.conn.cursor()
+        query = "update part set P_Type = %s, P_Color =%s, P_Weight = %s, P_Name = %s ,P_Price = %s,P_Manufacturer = %s,S_ID = %s where p_id = %s;"
+        cursor.execute(query, (type, color, weight, name, price, manufacturer, supplierID, pid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
