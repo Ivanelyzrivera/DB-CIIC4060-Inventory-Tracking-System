@@ -36,7 +36,6 @@ def getpartbyID(pid):
     return PartHandler().getpartbyID(pid)
 
 
-
 @app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():
     return SupplierHandler().getAllSuppliers()
