@@ -1,5 +1,5 @@
 from flask import jsonify
-from dao.users import UsersDAO
+from dao.users import UserDAO
 
 class UserHandler:
     
@@ -20,7 +20,7 @@ class UserHandler:
 
 
     def getAllUsers(self):
-        dao = PartDAO()
+        dao = UsersDAO()
         try:
             dbtuples = dao.getAllUsers()
             result = []
@@ -28,5 +28,5 @@ class UserHandler:
                 result.append(self.mapToDict(e))
             return jsonify(result)
         except Exception as e:
-            print(f"An error occurred while getting all parts: {e}")
-            return jsonify({'error': 'An error occurred while retrieving parts'}), 500
+            print(f"An error occurred while getting all users: {e}")
+            return jsonify({'error': 'An error occurred while retrieving users'}), 500
