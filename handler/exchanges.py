@@ -8,8 +8,8 @@ class ExchangeHandler:
         result = {
             'E_ID': t[0],
             'E_Reason': t[1],
-            'W_ID': t[2],
-            'U_ID': t[3],
+            'W_ID_Destination': t[2],
+            'U_ID_Destination': t[3],
             'T_ID': t[4]
         }
         return result
