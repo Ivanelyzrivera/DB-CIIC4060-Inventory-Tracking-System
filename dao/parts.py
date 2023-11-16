@@ -13,7 +13,7 @@ class PartDAO:
     def getAllParts(self):
         cursor = self.conn.cursor()
         result = []
-        query  = " Select P_ID ,P_Type,P_Color,P_Weight,P_Name,P_Price,P_Manufacturer,S_ID from Part"
+        query  = "Select P_ID ,P_Type,P_Color,P_Weight,P_Name,P_Price,P_Manufacturer,S_ID from Part"
         cursor.execute(query)
         for row in cursor:
             result.append(row)

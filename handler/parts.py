@@ -6,14 +6,14 @@ class PartHandler:
 
     def mapToDict(self,t):
         result = {}
-        dict['P_ID'] = t[0]
-        dict['P_Type'] = t[1]
-        dict['P_Color'] = t[2]
-        dict['P_Weight'] = t[3]
-        dict['P_Name'] = t[4]
-        dict['P_Price'] = t[5]
-        dict['P_Manufacturer'] = t[6]
-        dict['S_ID'] = t[7]
+        result['P_ID'] = t[0]
+        result['P_Type'] = t[1]
+        result['P_Color'] = t[2]
+        result['P_Weight'] = t[3]
+        result['P_Name'] = t[4]
+        result['P_Price'] = t[5]
+        result['P_Manufacturer'] = t[6]
+        result['S_ID'] = t[7]
         return result
 
 
