@@ -3,7 +3,7 @@ import psycopg2
 
 class TransactionDAO:
 	def __init__(self):
-		connection_url = "host = localhost dbname =%s user=%s password%s" %  (pg_config['dbname'],
+		connection_url = "host = localhost dbname =%s user=%s password=%s" %  (pg_config['dbname'],
 		  pg_config['user'],
 		  pg_config['password'])
 		print("Connnection URL: " + connection_url)
