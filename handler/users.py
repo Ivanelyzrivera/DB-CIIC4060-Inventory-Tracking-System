@@ -20,12 +20,12 @@ class UserHandler:
 
     def getAllUsers(self):
         dao = UserDAO()
-        # try:
-        dbtuples = dao.getAllUsers()
-        result = []
-        for e in dbtuples:
-            result.append(self.mapToDict(e))
-        return jsonify(result)
-        # except Exception as e:
-        #     print(f"An error occurred while getting all users: {e}")
-        #     return jsonify({'error': 'An error occurred while retrieving users'}), 500
+        try:
+            dbtuples = dao.getAllUsers()
+            result = []
+            for e in dbtuples:
+                result.append(self.mapToDict(e))
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all users: {e}")
+            return jsonify({'error': 'An error occurred while retrieving users'}), 500

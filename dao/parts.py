@@ -9,6 +9,7 @@ class PartDAO:
         print("Connection URL: " + connection_url)
         self.conn = psycopg2.connect(connection_url)
 
+
     def getAllParts(self):
         cursor = self.conn.cursor()
         query = "SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, S_ID FROM Part"
@@ -23,6 +24,7 @@ class PartDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+
 
     def getpartbyID(self,pid):
         cursor = self.conn.cursor()

@@ -9,11 +9,18 @@ class OutgoingDAO:
 		print("Connnection URL: " + connection_url)
 		self.conn = psycopg2.connect(connection_url)
 
+
 	def getAllOutgoings(self):
 		cursor = self.conn.cursor()
-		result = []
 		query = "Select O_ID,O_SellPrice,O_Customer,O_Destination,T_ID from Outgoing"
-		cursor.execute(query)
-		for row in cursor:
-			result.append(row)
-		return result
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

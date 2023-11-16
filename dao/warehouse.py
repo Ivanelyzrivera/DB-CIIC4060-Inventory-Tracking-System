@@ -12,12 +12,15 @@ class WarehouseDAO:
     
     def getAllWarehouses(self):
         cursor = self.conn.cursor()
-        result = []
         query  = "Select W_ID,W_Name,W_Address,W_City From Warehouse"
-        cursor.execute(query)
-        for row in cursor:
-            result.append(row)
-        return result
-    
-    
-
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

@@ -17,12 +17,12 @@ class ExchangeHandler:
 
     def getAllExchanges(self):
         dao = ExchangeDAO()
-        # try:
-        dbtuples = dao.getAllExchanges()
-        result = []
-        for e in dbtuples:
-            result.append(self.mapToDict(e))
-        return jsonify(result)
-        # except Exception as e:
-        #     print(f"An error occurred while getting all exchanges: {e}")
-        #     return jsonify({'error': 'An error occurred while retrieving exchanges'}), 500
+        try:
+            dbtuples = dao.getAllExchanges()
+            result = []
+            for e in dbtuples:
+                result.append(self.mapToDict(e))
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all exchanges: {e}")
+            return jsonify({'error': 'An error occurred while retrieving exchanges'}), 500

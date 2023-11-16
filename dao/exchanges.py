@@ -13,14 +13,14 @@ class ExchangeDAO:
     def getAllExchanges(self):
         cursor = self.conn.cursor()
         query = "SELECT E_ID, E_Reason, W_ID_Destination, U_ID_Destination, T_ID FROM Exchange;"
-        # try:
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        cursor.close()
-        return result
-        # except Exception as e:
-        #     print("An error occurred: ", e)
-        # finally:
-        #     cursor.close()
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

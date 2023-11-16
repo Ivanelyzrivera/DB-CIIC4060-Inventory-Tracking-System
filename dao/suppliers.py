@@ -12,10 +12,16 @@ class SupplierDAO:
     
     def getAllSuppliers(self):
         cursor = self.conn.cursor()
-        result = []
         query  = "SELECT S_ID,S_Name,S_Address,S_Email,S_PhoneNumber,S_City from Supplier"
-        cursor.execute(query)
-        for row in cursor:
-            result.append(row)
-        return result
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
 
