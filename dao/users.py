@@ -12,15 +12,15 @@ class UserDAO:
     
     def getAllUsers(self):
         cursor = self.conn.cursor()
-        query = "SELECT U_ID, U_FirstName, U_LastName, U_Email, U_Password, U_Salary, U_HireDate, U_Position, W_ID FROM User;"
-        try:
-            cursor.execute(query)
-            result = []
-            for row in cursor:
-                result.append(row)
-            cursor.close()
-            return result
-        except Exception as e:
-            print("An error occurred: ", e)
-        finally:
-            cursor.close()
+        result = []
+        query = "SELECT U_ID, U_FirstName, U_LastName, U_Email, U_Password, U_Salary, U_HireDate, U_Position, W_ID FROM Users;"
+        # try:
+        cursor.execute(query)
+        for row in cursor:
+            result.append(row)
+        cursor.close()
+        return result
+        # except Exception as e:
+        #     print("An error occurred: ", e)
+        # finally:
+        #     cursor.close()
