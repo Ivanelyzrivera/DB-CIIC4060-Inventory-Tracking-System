@@ -1,7 +1,7 @@
 from config.dbconfig import pg_config
 import psycopg2
 
-class RackDAO:
+class ExchangeDAO:
     def __init__(self):
         connection_url = "host = localhost dbname =%s user=%s password=%s" % (pg_config['dbname'],
          pg_config['user'],
@@ -10,9 +10,9 @@ class RackDAO:
         self.conn = psycopg2.connect(connection_url)
     
     
-    def getAllRacks(self):
+    def getAllExchanges(self):
         cursor = self.conn.cursor()
-        query = "SELECT R_ID, R_Capacity, R_Stock, W_ID, P_ID FROM Rack;"
+        query = "SELECT E_ID, E_Reason, W_Id, U_ID, T_ID FROM Exchange;"
         try:
             cursor.execute(query)
             result = []
