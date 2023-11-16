@@ -42,10 +42,6 @@ def getpartbyID(pid):
          return PartHandler().putById(pid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-         
-
-         
-    return PartHandler().getpartbyID(pid)
 
 
 @app.route('/DB_Project/Allsuppliers')

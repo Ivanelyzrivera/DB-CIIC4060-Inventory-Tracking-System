@@ -10,17 +10,16 @@ class OutgoingDAO:
 		self.conn = psycopg2.connect(connection_url)
 
 
-	def getAllOutgoings(self):
-		cursor = self.conn.cursor()
-		query = "Select O_ID,O_SellPrice,O_Customer,O_Destination,T_ID from Outgoing"
-        try:
-            cursor.execute(query)
-            result = []
-            for row in cursor:
-                result.append(row)
-            cursor.close()
-            return result
-        except Exception as e:
-            print("An error occurred: ", e)
-        finally:
-            cursor.close()
+def getAllOutgoings(self):
+    cursor = self.conn.cursor()
+    query = "SELECT O_ID, O_SellPrice, O_Customer, O_Destination, T_ID FROM Outgoing"
+    try:
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+    except Exception as e:
+        print("An error occurred: ", e)
+    finally:
+        cursor.close()
