@@ -3,6 +3,9 @@ from flask_cors import CORS,cross_origin
 from handler.parts import PartHandler
 from handler.suppliers import SupplierHandler
 from handler.warehouse import WarehouseHandler
+from handler.racks import RackHandler
+from handler.transactions import TransactionHandler
+from handler.users import UserHandler
 
 
 app = Flask(__name__)
@@ -25,6 +28,15 @@ def getAllSuppliers():
 @app.route('/DB_Project/Allwarehouses')
 def getAllWarehouses():
     return WarehouseHandler().getAllWarehouses()
+
+@app.route('/DB_Project/Allracks')
+def getAllRacks():
+    return RackHandler().getAllRacks()
+
+@app.route('/DB_Project/Allusers')
+def getAllUsers():
+    return UserHandler().getAllUsers()
+
 
 
 if __name__ == '__main__':
