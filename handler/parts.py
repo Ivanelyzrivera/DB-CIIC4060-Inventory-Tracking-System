@@ -18,14 +18,22 @@ class PartHandler:
 
 
 
+    # def getAllParts(self):
+    #     dao = PartDAO()
+    #     dbtuples = dao.getAllParts()
+    #     result =[]
+    #     for e in dbtuples:
+    #         result.append(self.mapToDict(e))
+    #     return jsonify(result)
+
     def getAllParts(self):
         dao = PartDAO()
-        dbtuples = dao.getAllParts()
-        result =[]
-        for e in dbtuples:
-            result.append(self.mapToDict(e))
-        return jsonify(result)
-
-
-
-
+        try:
+            dbtuples = dao.getAllParts()
+            result = []
+            for e in dbtuples:
+                result.append(self.mapToDict(e))
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all parts: {e}")
+            return jsonify({'error': 'An error occurred while retrieving parts'}), 500
