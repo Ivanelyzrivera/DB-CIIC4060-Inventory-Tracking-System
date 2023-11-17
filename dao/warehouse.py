@@ -151,3 +151,22 @@ class WarehouseDAO:
             print("An error ocurred: ", e)
         finally:
             cursor.close()
+            
+            
+    def getProfitByYear(self): # Top 5 warehouse that delivers the most exchanges
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID, EXTRACT(YEAR FROM T_Date) AS TransactionYear, sum(P_Price * T_Quantity) AS ProfitByYear
+            FROM warehouse natural inner join transaction natural inner join parts
+            WHERE T_Date = 'year'
+            GROUP BY  W_ID, T_Date
+            ORDER BY ProfitByYear ASC
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

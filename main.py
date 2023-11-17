@@ -264,5 +264,10 @@ def getTop3WarehousesLeastOutgoings():
 def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 
+# LOCAL STATISTICS
+@app.route('/datavengers/profit/by/year', methods = ['GET'])
+def getProfitByYear():
+     return WarehouseHandler().getProfitByYear()
+
 if __name__ == '__main__':
     app.run(debug=True)

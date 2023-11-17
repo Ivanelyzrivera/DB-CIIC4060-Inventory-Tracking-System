@@ -128,3 +128,15 @@ class WarehouseHandler:
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+        
+    def getProfitByYear(self):
+        dao = WarehouseDAO()
+        try:
+            dbtuples = dao.getProfitByYear()
+            result =[]
+            for e in dbtuples:
+                result.append(self.mapToDict(e))
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all warehouses: {e}")
+            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500   
