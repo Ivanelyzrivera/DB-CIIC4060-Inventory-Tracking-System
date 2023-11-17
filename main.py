@@ -98,9 +98,31 @@ def getwarehousebyID(wid):
 def getAllRacks():
     return RackHandler().getAllRacks()
 
-@app.route('/DB_Project/Allusers')
+@app.route('/users',methods=['GET', 'POST'])
 def getAllUsers():
-    return UserHandler().getAllUsers()
+    if request.method == 'GET':
+        return UserHandler().getAllUsers()
+    elif request.method == 'POST':
+        data = request.json
+        return UserHandler().insertUser(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/users/<int:uid>',methods = ['GET','PUT','DELETE'])
+def getuserbyID(uid):
+    if request.method == 'GET':
+         return UserHandler().getuserbyID(uid)
+    elif request.method == 'DELETE':
+         return UserHandler().deleteById(uid)
+    elif request.method == 'PUT':
+         data = request.json
+         return UserHandler().putById(uid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+    
+# @app.route('/DB_Project/Allusers')
+# def getAllUsers():
+#     return UserHandler().getAllUsers()
 
 @app.route('/DB_Project/Alltransactions')
 def getAllTransactions():
