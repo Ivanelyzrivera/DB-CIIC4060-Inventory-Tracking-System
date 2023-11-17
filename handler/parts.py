@@ -106,6 +106,17 @@ class PartHandler:
             return jsonify(parts_list)
         else:
             return jsonify("Not found"), 404
+        
+    def partsInRack(self,rid):
+        dao = PartDAO()
+        result = dao.partsInRack(rid)
+        if result:
+            parts_list = [self.mapToDict(part) for part in result]
+            return jsonify(parts_list)
+        else:
+            return jsonify("Not found"), 404
+
+
 
 
 

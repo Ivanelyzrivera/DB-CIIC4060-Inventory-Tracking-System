@@ -54,6 +54,11 @@ def getAllPriceOfParts():
 @app.route('/parts/supplier/<int:sid>', methods = ['GET'])
 def partsSupliedBySupplier(sid):
      return PartHandler().partsSupliedBySupplier(sid)
+
+@app.route('/parts/rack/<int:rid>',methods = ['GET'])
+def partsInRack(rid):
+     return PartHandler().partsInRack(rid)
+
      
 
 @app.route('/suppliers', methods = ['GET','POST'])

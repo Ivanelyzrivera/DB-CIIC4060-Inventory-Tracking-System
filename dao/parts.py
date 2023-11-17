@@ -105,6 +105,24 @@ class PartDAO:
         finally:
             cursor.close()
 
+    def partsInRack(self, rack_id):
+        cursor = self.conn.cursor()
+        query = """
+            SELECT Part.*
+            FROM Part
+            NATURAL INNER JOIN Rack
+            WHERE Rack.R_ID = %s;
+        """
+        try:
+            cursor.execute(query, (rack_id,))
+            parts_in_rack = cursor.fetchall()
+            return parts_in_rack
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+
 
 
 
