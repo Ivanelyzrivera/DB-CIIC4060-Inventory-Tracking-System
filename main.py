@@ -106,7 +106,6 @@ def getwarehousebyID(wid):
          return WarehouseHandler().putById(wid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-<<<<<<< HEAD
     
 
 @app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET'])
@@ -128,8 +127,6 @@ def warehouseRackLowStock(wid):
 #@app.route('/DB_Project/Allracks')
 #def getAllRacks():
 #    return RackHandler().getAllRacks()
-=======
->>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
 
 
 @app.route('/datavengers/racks',methods=['GET', 'POST'])
