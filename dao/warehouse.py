@@ -24,3 +24,40 @@ class WarehouseDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+            
+    def getwarehousebyID(self,wid):
+        cursor = self.conn.cursor()
+        query = "SELECT W_ID,W_Name,W_Address,W_City From Warehouse where w_id =%s"
+        try:
+            cursor.execute(query, (wid,))
+            result = cursor.fetchone()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+
+    def insertWarehouse(self,name,address,city, price):
+        cursor = self.conn.cursor()
+        query = "insert into warehouse(W_Name,W_Address,W_City)) values (%s, %s, %s, %s) returning W_ID"
+        cursor.execute(query, (name, address, city,))
+        W_ID = cursor.fetchone()[0]
+        self.conn.commit()
+        return W_ID
+    
+    def deleteById(self, wid):
+        cursor = self.conn.cursor()
+        query = " delete FROM Warehouse where w_id =%s"
+        cursor.execute(query, (wid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
+        
+    def putById(self,wid,name,address,city, price):
+        cursor = self.conn.cursor()
+        query = "update warehouse set W_Name = %s, W_Address =%s, W_City =%s where w_id = %s;"
+        cursor.execute(query, (name, address, city, wid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count

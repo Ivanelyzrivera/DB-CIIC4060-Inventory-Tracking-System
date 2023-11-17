@@ -26,3 +26,52 @@ class RackHandler:
         except Exception as e:
             print(f"An error occurred while getting all racks: {e}")
             return jsonify({'error': 'An error occurred while retrieving racks'}), 500
+   
+
+    def getracksID(self , rid):
+        dao = RackDAO()
+        result = dao.getracksID(rid)
+        if result:
+            return jsonify(self.mapToDict(result))
+        else:
+            return jsonify("Not found"), 404
+
+    def insertRacks(self,data):
+        capacity = data['R_Capacity']
+        stock = data['R_Stock']
+        warehouseID = data['W_ID']
+        partID = data['P_ID']
+        if capacity and stock and warehouseID and partID:
+            dao = RackDAO()
+            rid = dao.insertRacks(capacity, stock, warehouseID, partID)
+            data['W_ID'] = rid
+            return jsonify(data),201
+        else:
+            return jsonify("Bad Data or Unexpected attribute values, "), 400
+            
+
+    def deleteById(self, rid):
+        dao = RackDAO()
+        result = dao.deleteById(rid)
+        if result:
+            return jsonify("Delete was Succesful"),200
+        else:
+            return jsonify("Not found"), 404
+
+    def putById(self,rid,data):
+        capacity = data['R_Capacity']
+        stock = data['R_Stock']
+        warehouseID = data['W_ID']
+        partID = data['P_ID']
+        if rid and capacity and stock and warehouseID and partID:
+            dao = RackDAO()
+            flag = dao.putById(rid,capacity, stock, warehouseID, partID)
+            if flag:
+                return jsonify(data),201
+            else:
+                return jsonify ("Not Found"),400
+        else:
+            return jsonify("Bad Data or Unexpected attribute values, "), 400
+        
+
+        

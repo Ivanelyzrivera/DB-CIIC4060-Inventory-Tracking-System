@@ -24,3 +24,40 @@ class RackDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+            
+    def getracksID(self,rid):
+        cursor = self.conn.cursor()
+        query = "SELECT R_ID, R_Capacity R_Stock, W_ID, P_ID FROM Rack where r_id =%s"
+        try:
+            cursor.execute(query, (rid,))
+            result = cursor.fetchone()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+
+    def insertRacks(self,capacity, stock, warehouseID, partID):
+        cursor = self.conn.cursor()
+        query = "insert into racks(R_Capacity R_Stock, W_ID, P_ID) values (%s, %s, %s, %s) returning R_ID"
+        cursor.execute(query, (capacity, stock, warehouseID, partID,))
+        P_ID = cursor.fetchone()[0]
+        self.conn.commit()
+        return P_ID
+    
+    def deleteById(self, rid):
+        cursor = self.conn.cursor()
+        query = " delete FROM Part where p_id =%s"
+        cursor.execute(query, (rid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
+        
+    def putById(self,rid ,capacity, stock, warehouseID, partID):
+        cursor = self.conn.cursor()
+        query = "update racks set R_Capacity = %s, R_Stock = %s, W_ID = %s, P_ID = %s where r_id = %s;"
+        cursor.execute(query, (capacity, stock, warehouseID, partID, rid,))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count

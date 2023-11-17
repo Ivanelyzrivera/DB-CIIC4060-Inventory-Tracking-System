@@ -54,19 +54,107 @@ def getAllPriceOfParts():
 
 @app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():
-    return SupplierHandler().getAllSuppliers()
+    if request.method == 'GET':
+        return SupplierHandler().getAllSuppliers()
+    elif request.method == 'POST':
+        data = request.json
+        return SupplierHandler().insertSupplier(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
 
-@app.route('/DB_Project/Allwarehouses')
+@app.route('/suppliers/<int:sid>',methods = ['GET','PUT','DELETE'])
+def getsupplierbyID(sid):
+    if request.method == 'GET':
+         return SupplierHandler().getsupplierbyID(sid)
+    elif request.method == 'DELETE':
+         return SupplierHandler().deleteById(sid)
+    elif request.method == 'PUT':
+         data = request.json
+         return SupplierHandler().putById(sid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+
+
+# @app.route('/DB_Project/Allsuppliers')
+# def getAllSuppliers():
+#     return SupplierHandler().getAllSuppliers()
+
+@app.route('/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
 def getAllWarehouses():
-    return WarehouseHandler().getAllWarehouses()
+    if request.method == 'GET':
+        return  WarehouseHandler().getAllWarehouses()
+    elif request.method == 'POST':
+        data = request.json
+        return WarehouseHandler().insertWarehouse(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+    
 
-@app.route('/DB_Project/Allracks')
+@app.route('/warehouse/<int:wid>',methods = ['GET','PUT','DELETE'])
+def getwarehousebyID(wid):
+    if request.method == 'GET':
+         return WarehouseHandler().getwarehousebyID(wid)
+    elif request.method == 'DELETE':
+         return WarehouseHandler().deleteById(wid)
+    elif request.method == 'PUT':
+         data = request.json
+         return WarehouseHandler().putById(wid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+
+#@app.route('/DB_Project/Allracks')
+#def getAllRacks():
+#    return RackHandler().getAllRacks()
+
+
+@app.route('/racks',methods=['GET', 'POST'])
 def getAllRacks():
-    return RackHandler().getAllRacks()
+    if request.method == 'GET':
+        return RackHandler().getAllRacks()
+    elif request.method == 'POST':
+        data = request.json
+        return RackHandler().insertRack(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
 
-@app.route('/DB_Project/Allusers')
+@app.route('/racks/<int:rid>',methods = ['GET','PUT','DELETE'])
+def getracksbyID(rid):
+    if request.method == 'GET':
+         return RackHandler().getracksbyID(rid)
+    elif request.method == 'DELETE':
+         return RackHandler().deleteById(rid)
+    elif request.method == 'PUT':
+         data = request.json
+         return RackHandler().putById(rid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+
+
+@app.route('/users',methods=['GET', 'POST'])
 def getAllUsers():
-    return UserHandler().getAllUsers()
+    if request.method == 'GET':
+        return UserHandler().getAllUsers()
+    elif request.method == 'POST':
+        data = request.json
+        return UserHandler().insertUser(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/users/<int:uid>',methods = ['GET','PUT','DELETE'])
+def getuserbyID(uid):
+    if request.method == 'GET':
+         return UserHandler().getuserbyID(uid)
+    elif request.method == 'DELETE':
+         return UserHandler().deleteById(uid)
+    elif request.method == 'PUT':
+         data = request.json
+         return UserHandler().putById(uid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+    
+# @app.route('/DB_Project/Allusers')
+# def getAllUsers():
+#     return UserHandler().getAllUsers()
 
 @app.route('/DB_Project/Alltransactions')
 def getAllTransactions():
@@ -80,9 +168,30 @@ def getAllOutgoings():
 def getAllIncomings():
 	return IncomingHandler().getAllIncomings()
 
-@app.route('/DB_Project/Allexchanges')
+@app.route('/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
-	return ExchangeHandler().getAllExchanges()
+    if request.method == 'GET':
+        return ExchangeHandler().getAllExchanges()
+    elif request.method == 'POST':
+        data = request.json
+        return ExchangeHandler().insertExchange(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/exchanges/<int:eid>',methods = ['GET','PUT','DELETE'])
+def getexchangebyID(eid):
+    if request.method == 'GET':
+         return ExchangeHandler().getexchangebyID(eid)
+    elif request.method == 'DELETE':
+         return ExchangeHandler().deleteById(eid)
+    elif request.method == 'PUT':
+         data = request.json
+         return ExchangeHandler().putById(eid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+# @app.route('/DB_Project/Allexchanges')
+# def getAllExchanges():
+# 	return ExchangeHandler().getAllExchanges()
 
 if __name__ == '__main__':
     app.run(debug=True)
