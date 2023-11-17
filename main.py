@@ -163,13 +163,7 @@ def getuserbyID(uid):
     else:
          return jsonify("NOT SUPPORTED"),405
     
-# @app.route('/DB_Project/Allusers')
-# def getAllUsers():
-#     return UserHandler().getAllUsers()
 
-#@app.route('/DB_Project/Alltransactions')
-#def getAllTransactions():
-	#return TransactionHandler().getAllTransactions()
 
 @app.route('/transactions',methods=['GET', 'POST'])
 def getAllTransactions():
@@ -191,9 +185,7 @@ def getTransactionByID(tid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-# @app.route('/DB_Project/Alloutgoings')
-# def getAllOutgoings():
-# 	return OutgoingHandler().getAllOutgoings()
+
 
 @app.route('/outgoings',methods=['GET', 'POST'])
 def getAllOutgoings():
