@@ -115,4 +115,22 @@ class WarehouseDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+
+    def getTop3WarehouseCitiesMostTransactions(self):
+        cursor = self.conn.cursor()
+        query = """
+            select w_city, count(t_id) as transaction_count
+            FROM warehouse natural inner join transaction
+            group by w_city
+            order by count(t_id) desc
+            limit 3
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
     

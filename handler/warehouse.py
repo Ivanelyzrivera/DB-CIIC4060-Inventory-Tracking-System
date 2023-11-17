@@ -103,6 +103,18 @@ class WarehouseHandler:
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
+            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+
+    def getTop3WarehouseCitiesMostTransactions(self):
+        dao = WarehouseDAO()
+        try:
+            dbtuples = dao.getTop3WarehouseCitiesMostTransactions()
+            result =[]
+            for e in dbtuples:
+                result.append(e)
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all warehouses: {e}")
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500   
 
         
