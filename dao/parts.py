@@ -88,3 +88,23 @@ class PartDAO:
             cursor.close()
 
 
+    def partsSuppliedBySupplier(self, sid):
+        cursor = self.conn.cursor()
+        query = """
+        SELECT *
+        FROM part
+        JOIN supplier ON part.s_id = supplier.s_id
+        WHERE supplier.s_id = %s;
+        """
+        try:
+            cursor.execute(query, (sid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+
+
+

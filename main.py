@@ -50,9 +50,13 @@ def getpricebyID(pid):
 @app.route('/parts/allprice', methods = ['GET'])
 def getAllPriceOfParts():
      return PartHandler().getAllPriceOfParts()
+
+@app.route('/parts/supplier/<int:sid>', methods = ['GET'])
+def partsSupliedBySupplier(sid):
+     return PartHandler().partsSupliedBySupplier(sid)
      
 
-@app.route('/DB_Project/Allsuppliers')
+@app.route('/suppliers', methods = ['GET','POST'])
 def getAllSuppliers():
     if request.method == 'GET':
         return SupplierHandler().getAllSuppliers()
@@ -74,10 +78,6 @@ def getsupplierbyID(sid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-
-# @app.route('/DB_Project/Allsuppliers')
-# def getAllSuppliers():
-#     return SupplierHandler().getAllSuppliers()
 
 @app.route('/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
 def getAllWarehouses():
@@ -160,7 +160,7 @@ def getuserbyID(uid):
 #def getAllTransactions():
 	#return TransactionHandler().getAllTransactions()
 
-@app.route('/transactions/',methods=['GET', 'POST'])
+@app.route('/transactions',methods=['GET', 'POST'])
 def getAllTransactions():
     if request.method == 'GET':
         return TransactionHandler().getAllTransactions()
@@ -184,9 +184,30 @@ def getTransactionByID(tid):
 def getAllOutgoings():
 	return OutgoingHandler().getAllOutgoings()
 
-@app.route('/DB_Project/Allincomings')
+@app.route('/incomings',methods=['GET', 'POST'])
 def getAllIncomings():
-	return IncomingHandler().getAllIncomings()
+    if request.method == 'GET':
+        return IncomingHandler().getAllIncomings()
+    elif request.method == 'POST':
+        data = request.json
+        return IncomingHandler().insertIncoming(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/incomings/<int:pid>',methods = ['GET','PUT','DELETE'])
+def getincomingbyID(iid):
+    if request.method == 'GET':
+         return IncomingHandler().getincomingbyID(iid)
+    elif request.method == 'DELETE':
+         return IncomingHandler().deleteById(iid)
+    elif request.method == 'PUT':
+         data = request.json
+         return IncomingHandler().putById(iid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+# @app.route('/DB_Project/Allincomings')
+# def getAllIncomings():
+# 	return IncomingHandler().getAllIncomings()
 
 @app.route('/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
