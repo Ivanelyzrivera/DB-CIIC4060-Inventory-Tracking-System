@@ -42,7 +42,15 @@ def getpartbyID(pid):
          return PartHandler().putById(pid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
+    
+@app.route('/parts/price/<int:pid>', methods = ['GET'])
+def getpricebyID(pid):
+     return PartHandler().getpricebyID(pid)
 
+@app.route('/parts/allprice', methods = ['GET'])
+def getAllPriceOfParts():
+     return PartHandler().getAllPriceOfParts()
+     
 
 @app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():

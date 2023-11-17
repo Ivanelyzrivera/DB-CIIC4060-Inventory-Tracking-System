@@ -17,15 +17,6 @@ class PartHandler:
         return result
 
 
-
-    # def getAllParts(self):
-    #     dao = PartDAO()
-    #     dbtuples = dao.getAllParts()
-    #     result =[]
-    #     for e in dbtuples:
-    #         result.append(self.mapToDict(e))
-    #     return jsonify(result)
-
     def getAllParts(self):
         dao = PartDAO()
         try:
@@ -89,6 +80,23 @@ class PartHandler:
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
         
+
+    def getpricebyID(self , pid):
+        dao = PartDAO()
+        result = dao.getpartbyID(pid)
+        if result :
+            return jsonify(result[5],)
+        else:
+            return jsonify("Not found"), 404
+        
+
+    def getAllPriceOfParts(self):
+        dao = PartDAO()
+        try:
+            part_prices = dao.getAllPriceOfParts()
+            return jsonify(part_prices)
+        except Exception as e:
+            return jsonify({'error': 'An error occurred while retrieving part prices'}), 500
 
         
 

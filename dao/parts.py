@@ -62,3 +62,29 @@ class PartDAO:
         count = cursor.rowcount
         self.conn.commit()
         return count
+    
+    def getpricebyID(self, pid):
+        cursor = self.conn.cursor()
+        query = "SELECT P_Price FROM Part where p_id =%s"
+        try:
+            cursor.execute(query, (pid,))
+            result = cursor.fetchone()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+    def getAllPriceOfParts(self):
+        cursor = self.conn.cursor()
+        query = "SELECT P_Price FROM Part"
+        try:
+            cursor.execute(query)
+            result = [row[0] for row in cursor.fetchall()]  # Extract the first column value (P_Price)
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+
