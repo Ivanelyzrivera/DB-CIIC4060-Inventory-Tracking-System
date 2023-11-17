@@ -73,5 +73,13 @@ class RackHandler:
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
         
+        
+    def quantityOfPartsInRack(self,rid):
+        dao = RackDAO()
+        result = dao.quantityOfPartsInRack(rid)
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify("Not found"), 404
 
         
