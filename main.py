@@ -160,7 +160,7 @@ def getuserbyID(uid):
 #def getAllTransactions():
 	#return TransactionHandler().getAllTransactions()
 
-@app.route('/transactions/',methods=['GET', 'POST'])
+@app.route('/transactions',methods=['GET', 'POST'])
 def getAllTransactions():
     if request.method == 'GET':
         return TransactionHandler().getAllTransactions()
