@@ -116,6 +116,26 @@ class WarehouseDAO:
         finally:
             cursor.close()
 
+    # SELECT W_ID,W_Name,W_Address,W_City, count(r_id) as Rack_Count FROM warehouse NATURAL INNER JOIN rack GROUP BY W_ID,W_Name,W_Address,W_City ORDER BY count(r_id) desc LIMIT 10;
+
+    def partTypeByWarehouse(self):
+        cursor = self.conn.cursor()
+        query  = """
+        SELECT w_id, p_type , sum(r_stock)
+        From warehouse natural inner join rack natural inner join part
+        Group By w_id,p_type
+        """
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
     def getTop3WarehouseCitiesMostTransactions(self):
         cursor = self.conn.cursor()
         query = """
@@ -164,6 +184,25 @@ class WarehouseDAO:
         """
         try:
             cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+
+    def warehouseRackLowStock(self,wid):
+        cursor = self.conn.cursor()
+        query = """
+            SELECt Rack.*
+            FROM rack
+            WHERE W_ID = %s AND R_Stock < 0.25 * R_Capacity
+            ORDER BY
+            R_Capacity * 1.0 / R_Stock
+            LIMIT 5;
+        """
+        try:
+            cursor.execute(query,(wid,))
             result = cursor.fetchall()
             return result
         except Exception as e:
