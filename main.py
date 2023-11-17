@@ -50,9 +50,13 @@ def getpricebyID(pid):
 @app.route('/parts/allprice', methods = ['GET'])
 def getAllPriceOfParts():
      return PartHandler().getAllPriceOfParts()
+
+@app.route('/parts/supplier/<int:sid>', methods = ['GET'])
+def partsSupliedBySupplier(sid):
+     return PartHandler().partsSupliedBySupplier(sid)
      
 
-@app.route('/DB_Project/Allsuppliers')
+@app.route('/suppliers', methods = ['GET','POST'])
 def getAllSuppliers():
     if request.method == 'GET':
         return SupplierHandler().getAllSuppliers()
@@ -74,10 +78,6 @@ def getsupplierbyID(sid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-
-# @app.route('/DB_Project/Allsuppliers')
-# def getAllSuppliers():
-#     return SupplierHandler().getAllSuppliers()
 
 @app.route('/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
 def getAllWarehouses():
