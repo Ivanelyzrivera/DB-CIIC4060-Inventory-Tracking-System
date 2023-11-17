@@ -97,4 +97,22 @@ class WarehouseDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+            
+    def getTop5WarehousesThatDeliverMostExchanges(self): # Top 5 warehouse that delivers the most exchanges
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID, W_Name, W_Address, W_City, COUNT(T_ID) AS MostExchanges
+            FROM warehouse NATURAL INNER JOIN transaction 
+            GROUP BY W_ID,W_Name,W_Address,W_City
+            ORDER BY MostExchanges DESC
+            LIMIT 5
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
     
