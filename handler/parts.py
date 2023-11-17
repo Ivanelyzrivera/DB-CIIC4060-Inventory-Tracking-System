@@ -96,7 +96,20 @@ class PartHandler:
             part_prices = dao.getAllPriceOfParts()
             return jsonify(part_prices)
         except Exception as e:
-            return jsonify({'error': 'An error occurred while retrieving part prices'}), 500
+            return jsonify("Not found"), 400
+        
+    def partsSupliedBySupplier(self, sid):
+        dao = PartDAO()
+        result = dao.partsSuppliedBySupplier(sid)
+        if result:
+            parts_list = [self.mapToDict(part) for part in result]
+            return jsonify(parts_list)
+        else:
+            return jsonify("Not found"), 404
+
+
+
+
 
         
 
