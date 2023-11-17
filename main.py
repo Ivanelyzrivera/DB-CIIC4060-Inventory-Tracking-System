@@ -156,24 +156,24 @@ def getuserbyID(uid):
 # def getAllUsers():
 #     return UserHandler().getAllUsers()
 
-@app.route('/DB_Project/Alltransactions')
-def getAllTransactions():
-	return TransactionHandler().getAllTransactions()
+#@app.route('/DB_Project/Alltransactions')
+#def getAllTransactions():
+	#return TransactionHandler().getAllTransactions()
 
-@app.route('/transactions',methods=['GET', 'POST'])
+@app.route('/transactions/',methods=['GET', 'POST'])
 def getAllTransactions():
     if request.method == 'GET':
-        return UserHandler().getAllTransactions()
+        return TransactionHandler().getAllTransactions()
     elif request.method == 'POST':
         data = request.json
-        return UserHandler().insertTransaction(data)
+        return TransactionHandler().insertTransaction(data)
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/transactions/<int:uid>',methods = ['GET','PUT'])
-def getuserbyID(tid):
+@app.route('/transactions/<int:tid>',methods = ['GET','PUT'])
+def getTransactionByID(tid):
     if request.method == 'GET':
-         return TransactionHandler().getuserbyID(tid)
+         return TransactionHandler().getTransactionByID(tid)
     elif request.method == 'PUT':
          data = request.json
          return TransactionHandler().putById(tid,data)
