@@ -248,13 +248,13 @@ def getTop10WarehousesMostRacks():
 def getTop5WarehousesMostIncomings():
      return WarehouseHandler().getTop5WarehousesMostIncomings()
 
-@app.route('/datavengers/most/transaction', methods = ['GET'])
-def getTop3UsersMostTransactions():
-    return UserHandler().getTop3UsersMostTransactions()
-
-@app.route('/datavengers/most/exchanges', methods = ['GET'])
+@app.route('/datavengers/most/deliver', methods = ['GET'])
 def getTop5WarehousesThatDeliverMostExchanges():
      return WarehouseHandler().getTop5WarehousesThatDeliverMostExchanges()
+
+@app.route('/datavengers/most/transactions', methods = ['GET'])
+def getTop3UsersMostTransactions():
+    return UserHandler().getTop3UsersMostTransactions()
 
 if __name__ == '__main__':
     app.run(debug=True)
