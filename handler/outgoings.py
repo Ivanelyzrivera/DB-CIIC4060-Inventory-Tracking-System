@@ -63,7 +63,7 @@ class OutgoingHandler:
 			dao = OutgoingDAO()
 			flag = dao.putById(oid,sellprice,customer,destination,transactionID)
 			if flag:
-				return jsonify(data),200
+				return jsonify(data),201
 			else:
 				return jsonify ("Not Found"),400
 		else:

@@ -192,7 +192,7 @@ def getTransactionByID(tid):
 @app.route('/outgoings',methods=['GET', 'POST'])
 def getAllOutgoings():
     if request.method == 'GET':
-        return OutgoingHandler().getAllOutgoing()
+        return OutgoingHandler().getAllOutgoings()
     elif request.method == 'POST':
         data = request.json
         return OutgoingHandler().insertOutgoing(data)
