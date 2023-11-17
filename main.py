@@ -180,9 +180,31 @@ def getTransactionByID(tid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-@app.route('/DB_Project/Alloutgoings')
+# @app.route('/DB_Project/Alloutgoings')
+# def getAllOutgoings():
+# 	return OutgoingHandler().getAllOutgoings()
+
+@app.route('/outgoings',methods=['GET', 'POST'])
 def getAllOutgoings():
-	return OutgoingHandler().getAllOutgoings()
+    if request.method == 'GET':
+        return OutgoingHandler().getAllOutgoing()
+    elif request.method == 'POST':
+        data = request.json
+        return OutgoingHandler().insertOutgoing(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/outgoings/<int:oid>',methods = ['GET','PUT','DELETE'])
+def getoutgoingbyID(oid):
+    if request.method == 'GET':
+         return OutgoingHandler().getoutgoingbyID(oid)
+    elif request.method == 'DELETE':
+         return OutgoingHandler().deleteById(oid)
+    elif request.method == 'PUT':
+         data = request.json
+         return OutgoingHandler().putById(oid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
 
 @app.route('/incomings',methods=['GET', 'POST'])
 def getAllIncomings():
@@ -194,7 +216,7 @@ def getAllIncomings():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/incomings/<int:pid>',methods = ['GET','PUT','DELETE'])
+@app.route('/incomings/<int:iid>',methods = ['GET','PUT','DELETE'])
 def getincomingbyID(iid):
     if request.method == 'GET':
          return IncomingHandler().getincomingbyID(iid)
