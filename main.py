@@ -82,7 +82,7 @@ def getAllWarehouses():
     
 
 @app.route('/warehouse/<int:wid>',methods = ['GET','PUT','DELETE'])
-def getwarehousebyID(pid):
+def getwarehousebyID(wid):
     if request.method == 'GET':
          return WarehouseHandler().getwarehousebyID(wid)
     elif request.method == 'DELETE':
