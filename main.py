@@ -95,7 +95,7 @@ def getAllWarehouses():
         return jsonify("NOT SUPPORTED"),405
     
 
-@app.route('/warehouse/<int:wid>',methods = ['GET','PUT','DELETE'])
+@app.route('/warehouses/<int:wid>',methods = ['GET','PUT','DELETE'])
 def getwarehousebyID(wid):
     if request.method == 'GET':
          return WarehouseHandler().getwarehousebyID(wid)
