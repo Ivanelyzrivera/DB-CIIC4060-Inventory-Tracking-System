@@ -43,10 +43,32 @@ def getpartbyID(pid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-
-@app.route('/DB_Project/Allsuppliers')
+@app.route('/suppliers',methods=['GET', 'POST'])
 def getAllSuppliers():
-    return SupplierHandler().getAllSuppliers()
+    if request.method == 'GET':
+        return SupplierHandler().getAllSuppliers()
+    elif request.method == 'POST':
+        data = request.json
+        return SupplierHandler().insertSupplier(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/suppliers/<int:sid>',methods = ['GET','PUT','DELETE'])
+def getsupplierbyID(sid):
+    if request.method == 'GET':
+         return SupplierHandler().getsupplierbyID(sid)
+    elif request.method == 'DELETE':
+         return SupplierHandler().deleteById(sid)
+    elif request.method == 'PUT':
+         data = request.json
+         return SupplierHandler().putById(sid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+
+
+# @app.route('/DB_Project/Allsuppliers')
+# def getAllSuppliers():
+#     return SupplierHandler().getAllSuppliers()
 
 @app.route('/DB_Project/Allwarehouses')
 def getAllWarehouses():
