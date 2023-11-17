@@ -184,9 +184,30 @@ def getTransactionByID(tid):
 def getAllOutgoings():
 	return OutgoingHandler().getAllOutgoings()
 
-@app.route('/DB_Project/Allincomings')
+@app.route('/incomings',methods=['GET', 'POST'])
 def getAllIncomings():
-	return IncomingHandler().getAllIncomings()
+    if request.method == 'GET':
+        return IncomingHandler().getAllIncomings()
+    elif request.method == 'POST':
+        data = request.json
+        return IncomingHandler().insertIncoming(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/incomings/<int:pid>',methods = ['GET','PUT','DELETE'])
+def getincomingbyID(iid):
+    if request.method == 'GET':
+         return IncomingHandler().getincomingbyID(iid)
+    elif request.method == 'DELETE':
+         return IncomingHandler().deleteById(iid)
+    elif request.method == 'PUT':
+         data = request.json
+         return IncomingHandler().putById(iid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+# @app.route('/DB_Project/Allincomings')
+# def getAllIncomings():
+# 	return IncomingHandler().getAllIncomings()
 
 @app.route('/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
