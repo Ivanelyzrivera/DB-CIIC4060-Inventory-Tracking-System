@@ -264,5 +264,11 @@ def getexchangebyID(eid):
 # def getAllExchanges():
 # 	return ExchangeHandler().getAllExchanges()
 
+
+# STATISTIC
+@app.route('/most/rack', methods = ['GET'])
+def getTop10WarehousesMostRacks():
+     return WarehouseHandler().getTop10WarehousesMostRacks()
+
 if __name__ == '__main__':
     app.run(debug=True)
