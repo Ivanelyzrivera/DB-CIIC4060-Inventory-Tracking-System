@@ -260,10 +260,14 @@ def getexchangebyID(eid):
 # 	return ExchangeHandler().getAllExchanges()
 
 
-# STATISTIC
-@app.route('/most/rack', methods = ['GET'])
+# GLOBAL STATISTICS
+@app.route('/datavengers/most/rack', methods = ['GET'])
 def getTop10WarehousesMostRacks():
      return WarehouseHandler().getTop10WarehousesMostRacks()
+
+@app.route('/datavengers/most/incoming', methods = ['GET'])
+def getTop5WarehousesMostIncomings():
+     return WarehouseHandler().getTop5WarehousesMostIncomings()
 
 if __name__ == '__main__':
     app.run(debug=True)

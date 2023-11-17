@@ -80,5 +80,21 @@ class WarehouseDAO:
         finally:
             cursor.close()
     
-
-    # SELECT W_ID,W_Name,W_Address,W_City, count(r_id) as Rack_Count FROM warehouse NATURAL INNER JOIN rack GROUP BY W_ID,W_Name,W_Address,W_City ORDER BY count(r_id) desc LIMIT 10;
+    def getTop5WarehousesMostIncomings(self):
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID,W_Name,W_Address,W_City, count(I_ID) as incoming_count
+            FROM warehouse NATURAL INNER JOIN transaction NATURAL INNER JOIN incoming
+            GROUP BY W_ID,W_Name,W_Address,W_City
+            ORDER BY count(I_ID) desc
+            LIMIT 5
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+    
