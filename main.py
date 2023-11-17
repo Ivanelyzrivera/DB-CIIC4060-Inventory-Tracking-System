@@ -21,7 +21,7 @@ CORS(app)
 def greeting():
     return 'Hello, this is a test file'
 
-@app.route('/parts',methods=['GET', 'POST'])
+@app.route('/datavengers/parts',methods=['GET', 'POST'])
 def getAllParts():
     if request.method == 'GET':
         return PartHandler().getAllParts()
@@ -31,7 +31,7 @@ def getAllParts():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/parts/<int:pid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/parts/<int:pid>',methods = ['GET','PUT','DELETE'])
 def getpartbyID(pid):
     if request.method == 'GET':
          return PartHandler().getpartbyID(pid)
@@ -43,25 +43,25 @@ def getpartbyID(pid):
     else:
          return jsonify("NOT SUPPORTED"),405
     
-@app.route('/parts/price/<int:pid>', methods = ['GET'])
+@app.route('/datavengers/parts/price/<int:pid>', methods = ['GET'])
 def getpricebyID(pid):
      return PartHandler().getpricebyID(pid)
 
-@app.route('/parts/allprice', methods = ['GET'])
+@app.route('/datavengers/parts/allprice', methods = ['GET'])
 def getAllPriceOfParts():
      return PartHandler().getAllPriceOfParts()
 
-@app.route('/parts/supplier/<int:sid>', methods = ['GET'])
+@app.route('/datavengers/parts/supplier/<int:sid>', methods = ['GET'])
 def partsSupliedBySupplier(sid):
      return PartHandler().partsSupliedBySupplier(sid)
 
-@app.route('/parts/rack/<int:rid>',methods = ['GET'])
+@app.route('/datavengers/parts/rack/<int:rid>',methods = ['GET'])
 def partsInRack(rid):
      return PartHandler().partsInRack(rid)
 
      
 
-@app.route('/suppliers', methods = ['GET','POST'])
+@app.route('/datavengers/suppliers', methods = ['GET','POST'])
 def getAllSuppliers():
     if request.method == 'GET':
         return SupplierHandler().getAllSuppliers()
@@ -71,7 +71,7 @@ def getAllSuppliers():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/suppliers/<int:sid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/suppliers/<int:sid>',methods = ['GET','PUT','DELETE'])
 def getsupplierbyID(sid):
     if request.method == 'GET':
          return SupplierHandler().getsupplierbyID(sid)
@@ -84,7 +84,7 @@ def getsupplierbyID(sid):
          return jsonify("NOT SUPPORTED"),405
 
 
-@app.route('/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
+@app.route('/datavengers/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
 def getAllWarehouses():
     if request.method == 'GET':
         return  WarehouseHandler().getAllWarehouses()
@@ -95,7 +95,7 @@ def getAllWarehouses():
         return jsonify("NOT SUPPORTED"),405
     
 
-@app.route('/warehouses/<int:wid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/warehouses/<int:wid>',methods = ['GET','PUT','DELETE'])
 def getwarehousebyID(wid):
     if request.method == 'GET':
          return WarehouseHandler().getwarehousebyID(wid)
@@ -106,32 +106,22 @@ def getwarehousebyID(wid):
          return WarehouseHandler().putById(wid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-#started route and logic for lowstock
-# @app.route('warehouse/<int:wid>/rack/lowstock')
-# def getlowstockracks(wid):
-#      racks = []
-#      for rack in RackHandler().getAllRacks():
-#           if 
-          
-#@app.route('/DB_Project/Allracks')
-#def getAllRacks():
-#    return RackHandler().getAllRacks()
 
 
-@app.route('/racks',methods=['GET', 'POST'])
+@app.route('/datavengers/racks',methods=['GET', 'POST'])
 def getAllRacks():
     if request.method == 'GET':
         return RackHandler().getAllRacks()
     elif request.method == 'POST':
         data = request.json
-        return RackHandler().insertRacks(data)
+        return RackHandler().insertRack(data)
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/racks/<int:rid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/racks/<int:rid>',methods = ['GET','PUT','DELETE'])
 def getracksbyID(rid):
     if request.method == 'GET':
-         return RackHandler().getracksID(rid)
+         return RackHandler().getracksbyID(rid)
     elif request.method == 'DELETE':
          return RackHandler().deleteById(rid)
     elif request.method == 'PUT':
@@ -139,14 +129,9 @@ def getracksbyID(rid):
          return RackHandler().putById(rid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-    
-@app.route('/racks/quantity/<int:rid>', methods = ['GET'])
-def quantityOfPartsInRack(rid):
-    return RackHandler().quantityOfPartsInRack(rid)
 
 
-
-@app.route('/users',methods=['GET', 'POST'])
+@app.route('/datavengers/users',methods=['GET', 'POST'])
 def getAllUsers():
     if request.method == 'GET':
         return UserHandler().getAllUsers()
@@ -156,7 +141,7 @@ def getAllUsers():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/users/<int:uid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/users/<int:uid>',methods = ['GET','PUT','DELETE'])
 def getuserbyID(uid):
     if request.method == 'GET':
          return UserHandler().getuserbyID(uid)
@@ -167,10 +152,8 @@ def getuserbyID(uid):
          return UserHandler().putById(uid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-    
 
-
-@app.route('/transactions',methods=['GET', 'POST'])
+@app.route('/datavengers/transactions',methods=['GET', 'POST'])
 def getAllTransactions():
     if request.method == 'GET':
         return TransactionHandler().getAllTransactions()
@@ -180,7 +163,7 @@ def getAllTransactions():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/transactions/<int:tid>',methods = ['GET','PUT'])
+@app.route('/datavengers/transactions/<int:tid>',methods = ['GET','PUT'])
 def getTransactionByID(tid):
     if request.method == 'GET':
          return TransactionHandler().getTransactionByID(tid)
@@ -190,9 +173,7 @@ def getTransactionByID(tid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-
-
-@app.route('/outgoings',methods=['GET', 'POST'])
+@app.route('/datavengers/outgoings',methods=['GET', 'POST'])
 def getAllOutgoings():
     if request.method == 'GET':
         return OutgoingHandler().getAllOutgoings()
@@ -202,7 +183,7 @@ def getAllOutgoings():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/outgoings/<int:oid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/outgoings/<int:oid>',methods = ['GET','PUT','DELETE'])
 def getoutgoingbyID(oid):
     if request.method == 'GET':
          return OutgoingHandler().getoutgoingbyID(oid)
@@ -214,7 +195,7 @@ def getoutgoingbyID(oid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-@app.route('/incomings',methods=['GET', 'POST'])
+@app.route('/datavengers/incomings',methods=['GET', 'POST'])
 def getAllIncomings():
     if request.method == 'GET':
         return IncomingHandler().getAllIncomings()
@@ -224,7 +205,7 @@ def getAllIncomings():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/incomings/<int:iid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/incomings/<int:iid>',methods = ['GET','PUT','DELETE'])
 def getincomingbyID(iid):
     if request.method == 'GET':
          return IncomingHandler().getincomingbyID(iid)
@@ -235,11 +216,8 @@ def getincomingbyID(iid):
          return IncomingHandler().putById(iid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-# @app.route('/DB_Project/Allincomings')
-# def getAllIncomings():
-# 	return IncomingHandler().getAllIncomings()
 
-@app.route('/exchanges',methods=['GET', 'POST'])
+@app.route('/datavengers/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
     if request.method == 'GET':
         return ExchangeHandler().getAllExchanges()
@@ -249,7 +227,7 @@ def getAllExchanges():
     else:
         return jsonify("NOT SUPPORTED"),405
 
-@app.route('/exchanges/<int:eid>',methods = ['GET','PUT','DELETE'])
+@app.route('/datavengers/exchanges/<int:eid>',methods = ['GET','PUT','DELETE'])
 def getexchangebyID(eid):
     if request.method == 'GET':
          return ExchangeHandler().getexchangebyID(eid)
@@ -260,19 +238,18 @@ def getexchangebyID(eid):
          return ExchangeHandler().putById(eid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-# @app.route('/DB_Project/Allexchanges')
-# def getAllExchanges():
-# 	return ExchangeHandler().getAllExchanges()
 
-
-# STATISTIC
-@app.route('/most/rack', methods = ['GET'])
+# GLOBAL STATISTICS
+@app.route('/datavengers/most/rack', methods = ['GET'])
 def getTop10WarehousesMostRacks():
      return WarehouseHandler().getTop10WarehousesMostRacks()
 
 @app.route('/most/transaction', methods = ['GET'])
 def getTop3UsersMostTransactions():
     return UserHandler().getTop3UsersMostTransactions()
+@app.route('/datavengers/most/incoming', methods = ['GET'])
+def getTop5WarehousesMostIncomings():
+     return WarehouseHandler().getTop5WarehousesMostIncomings()
 
 if __name__ == '__main__':
     app.run(debug=True)
