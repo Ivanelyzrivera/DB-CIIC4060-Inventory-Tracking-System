@@ -42,8 +42,17 @@ def getpartbyID(pid):
          return PartHandler().putById(pid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
+    
+@app.route('/parts/price/<int:pid>', methods = ['GET'])
+def getpricebyID(pid):
+     return PartHandler().getpricebyID(pid)
 
-@app.route('/suppliers',methods=['GET', 'POST'])
+@app.route('/parts/allprice', methods = ['GET'])
+def getAllPriceOfParts():
+     return PartHandler().getAllPriceOfParts()
+     
+
+@app.route('/DB_Project/Allsuppliers')
 def getAllSuppliers():
     if request.method == 'GET':
         return SupplierHandler().getAllSuppliers()
@@ -179,9 +188,30 @@ def getAllOutgoings():
 def getAllIncomings():
 	return IncomingHandler().getAllIncomings()
 
-@app.route('/DB_Project/Allexchanges')
+@app.route('/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
-	return ExchangeHandler().getAllExchanges()
+    if request.method == 'GET':
+        return ExchangeHandler().getAllExchanges()
+    elif request.method == 'POST':
+        data = request.json
+        return ExchangeHandler().insertExchange(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+
+@app.route('/exchanges/<int:eid>',methods = ['GET','PUT','DELETE'])
+def getexchangebyID(eid):
+    if request.method == 'GET':
+         return ExchangeHandler().getexchangebyID(eid)
+    elif request.method == 'DELETE':
+         return ExchangeHandler().deleteById(eid)
+    elif request.method == 'PUT':
+         data = request.json
+         return ExchangeHandler().putById(eid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+# @app.route('/DB_Project/Allexchanges')
+# def getAllExchanges():
+# 	return ExchangeHandler().getAllExchanges()
 
 if __name__ == '__main__':
     app.run(debug=True)
