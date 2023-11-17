@@ -130,13 +130,7 @@ class WarehouseDAO:
             result = cursor.fetchall()
             return result
         except Exception as e:
-<<<<<<< HEAD
-            print("An error ocurred: ", e)
-        finally:
-            cursor.close()
-=======
             print("An error occurred: ", e)
         finally:
             cursor.close()
     
->>>>>>> 50575fab96adb62195f9e7fef879ad82ddca58e4
