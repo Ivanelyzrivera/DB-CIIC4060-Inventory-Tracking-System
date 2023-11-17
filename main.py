@@ -106,7 +106,13 @@ def getwarehousebyID(wid):
          return WarehouseHandler().putById(wid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-
+#started route and logic for lowstock
+# @app.route('warehouse/<int:wid>/rack/lowstock')
+# def getlowstockracks(wid):
+#      racks = []
+#      for rack in RackHandler().getAllRacks():
+#           if 
+          
 #@app.route('/DB_Project/Allracks')
 #def getAllRacks():
 #    return RackHandler().getAllRacks()
