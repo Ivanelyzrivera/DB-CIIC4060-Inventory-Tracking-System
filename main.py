@@ -70,9 +70,29 @@ def getsupplierbyID(sid):
 # def getAllSuppliers():
 #     return SupplierHandler().getAllSuppliers()
 
-@app.route('/DB_Project/Allwarehouses')
+@app.route('/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
 def getAllWarehouses():
-    return WarehouseHandler().getAllWarehouses()
+    if request.method == 'GET':
+        return  WarehouseHandler().getAllWarehouses()
+    elif request.method == 'POST':
+        data = request.json
+        return WarehouseHandler().insertWarehouse(data)
+    else:
+        return jsonify("NOT SUPPORTED"),405
+    
+
+@app.route('/warehouse/<int:wid>',methods = ['GET','PUT','DELETE'])
+def getwarehousebyID(pid):
+    if request.method == 'GET':
+         return WarehouseHandler().getwarehousebyID(wid)
+    elif request.method == 'DELETE':
+         return WarehouseHandler().deleteById(wid)
+    elif request.method == 'PUT':
+         data = request.json
+         return WarehouseHandler().putById(wid,data)
+    else:
+         return jsonify("NOT SUPPORTED"),405
+
 
 @app.route('/DB_Project/Allracks')
 def getAllRacks():
