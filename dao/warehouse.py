@@ -151,24 +151,6 @@ class WarehouseDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
-<<<<<<< HEAD
-
-    def warehouseRackLowStock(self, wid):
-        cursor = self.conn.cursor()
-        query  = """
-        SELECT rack.*
-        FROM rack 
-        WHERE R_Stock < 0.25 * R_Capacity and W_ID = %s
-        ORDER BY R_Capacity * 1.0 / R_Stock
-        LIMIT 5;
-        """
-        try:
-            cursor.execute(query,(wid,))
-            result = []
-            for row in cursor:
-                result.append(row)
-            cursor.close()
-=======
     
     def getTop3WarehousesLeastOutgoings(self):
         cursor = self.conn.cursor()
@@ -201,7 +183,6 @@ class WarehouseDAO:
         try:
             cursor.execute(query)
             result = cursor.fetchall()
->>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
             return result
         except Exception as e:
             print("An error occurred: ", e)
