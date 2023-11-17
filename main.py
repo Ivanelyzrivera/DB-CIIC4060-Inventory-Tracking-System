@@ -252,5 +252,9 @@ def getTop5WarehousesMostIncomings():
 def getTop3UsersMostTransactions():
     return UserHandler().getTop3UsersMostTransactions()
 
+@app.route('/datavengers/most/transaction', methods = ['GET'])
+def getTop3WarehousesLeastOutgoings(self):
+    return WarehouseHandler().getTop3WarehousesLeastOutgoings()
+
 if __name__ == '__main__':
     app.run(debug=True)

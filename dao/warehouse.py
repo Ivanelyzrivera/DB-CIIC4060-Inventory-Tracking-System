@@ -98,3 +98,20 @@ class WarehouseDAO:
         finally:
             cursor.close()
     
+    def getTop3WarehousesLeastOutgoings(self):
+        cursor = self.conn.cursor()
+        query = """
+            select W_ID, count(o_id) as outgoing_transaction_count
+            from transaction natural inner join outgoing
+            group by W_ID
+            order by count(o_id)
+            limit 3
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error ocurred: ", e)
+        finally:
+            cursor.close()
