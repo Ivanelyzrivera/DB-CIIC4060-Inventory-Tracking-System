@@ -69,3 +69,15 @@ class WarehouseHandler:
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
         
+    def getTop10WarehousesMostRacks(self):
+        dao = WarehouseDAO()
+        try:
+            dbtuples = dao.getTop10WarehousesMostRacks()
+            result =[]
+            for e in dbtuples:
+                result.append(self.mapToDict(e))
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all warehouses: {e}")
+            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+        

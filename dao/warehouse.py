@@ -61,3 +61,24 @@ class WarehouseDAO:
         count = cursor.rowcount
         self.conn.commit()
         return count
+    
+    def getTop10WarehousesMostRacks(self):
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID,W_Name,W_Address,W_City, count(r_id) as Rack_Count
+            FROM warehouse NATURAL INNER JOIN rack
+            GROUP BY W_ID,W_Name,W_Address,W_City
+            ORDER BY count(r_id) desc
+            LIMIT 10
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+    
+
+    # SELECT W_ID,W_Name,W_Address,W_City, count(r_id) as Rack_Count FROM warehouse NATURAL INNER JOIN rack GROUP BY W_ID,W_Name,W_Address,W_City ORDER BY count(r_id) desc LIMIT 10;
