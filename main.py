@@ -107,6 +107,16 @@ def getwarehousebyID(wid):
     else:
          return jsonify("NOT SUPPORTED"),405
     
+
+@app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET'])
+def partTypeByWarehouse():
+    return WarehouseHandler().partTypeByWarehouse()
+
+@app.route('/datavenger/warehouse/<int:wid>/rack/lowstock',methods = ['GET'])
+def warehouseRackLowStock(wid):
+    return WarehouseHandler().warehouseRackLowStock(wid)
+
+    
 #started route and logic for lowstock
 # @app.route('warehouse/<int:wid>/rack/lowstock')
 # def getlowstockracks(wid):
