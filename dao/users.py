@@ -61,5 +61,20 @@ class UserDAO:
         self.conn.commit()
         return count
 
-    
-
+    def getTop3UsersMostTransactions(self):
+        cursor = self.conn.cursor()
+        query = """
+            select U_ID, count(t_id) as transaction_count
+            from transaction
+            group by U_ID
+            order by count(t_id) desc
+            limit 3
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

@@ -270,5 +270,9 @@ def getexchangebyID(eid):
 def getTop10WarehousesMostRacks():
      return WarehouseHandler().getTop10WarehousesMostRacks()
 
+@app.route('/most/transaction', methods = ['GET'])
+def getTop3UsersMostTransactions():
+    return UserHandler().getTop3UsersMostTransactions()
+
 if __name__ == '__main__':
     app.run(debug=True)
