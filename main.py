@@ -112,7 +112,7 @@ def getwarehousebyID(wid):
 def partTypeByWarehouse():
     return WarehouseHandler().partTypeByWarehouse()
 
-@app.route('/datavenger/warehouse/<int:wid>/rack/lowstock',methods = ['GET'])
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET'])
 def warehouseRackLowStock(wid):
     return WarehouseHandler().warehouseRackLowStock(wid)
 
