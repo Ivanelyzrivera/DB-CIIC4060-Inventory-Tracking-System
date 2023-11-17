@@ -73,3 +73,21 @@ class RackDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+
+    def get5MostExpensiveRacks(self):
+        cursor = self.conn.cursor()
+        query = """
+            select rack.R_ID, sum(part.P_Price * rack.R_Stock) as total_value
+            from rack natural inner join part
+            group by rack.R_ID
+            order by sum(part.P_Price * rack.R_Stock) desc
+            limit 5
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
