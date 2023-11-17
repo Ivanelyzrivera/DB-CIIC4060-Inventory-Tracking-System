@@ -106,6 +106,7 @@ def getwarehousebyID(wid):
          return WarehouseHandler().putById(wid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
+<<<<<<< HEAD
     
 
 @app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET'])
@@ -127,6 +128,8 @@ def warehouseRackLowStock(wid):
 #@app.route('/DB_Project/Allracks')
 #def getAllRacks():
 #    return RackHandler().getAllRacks()
+=======
+>>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
 
 
 @app.route('/datavengers/racks',methods=['GET', 'POST'])
@@ -173,14 +176,6 @@ def getuserbyID(uid):
          return UserHandler().putById(uid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-    
-# @app.route('/DB_Project/Allusers')
-# def getAllUsers():
-#     return UserHandler().getAllUsers()
-
-#@app.route('/DB_Project/Alltransactions')
-#def getAllTransactions():
-	#return TransactionHandler().getAllTransactions()
 
 @app.route('/datavengers/transactions',methods=['GET', 'POST'])
 def getAllTransactions():
@@ -201,10 +196,6 @@ def getTransactionByID(tid):
          return TransactionHandler().putById(tid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-
-# @app.route('/DB_Project/Alloutgoings')
-# def getAllOutgoings():
-# 	return OutgoingHandler().getAllOutgoings()
 
 @app.route('/datavengers/outgoings',methods=['GET', 'POST'])
 def getAllOutgoings():
@@ -249,9 +240,6 @@ def getincomingbyID(iid):
          return IncomingHandler().putById(iid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-# @app.route('/DB_Project/Allincomings')
-# def getAllIncomings():
-# 	return IncomingHandler().getAllIncomings()
 
 @app.route('/datavengers/exchanges',methods=['GET', 'POST'])
 def getAllExchanges():
@@ -274,9 +262,36 @@ def getexchangebyID(eid):
          return ExchangeHandler().putById(eid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
-# @app.route('/DB_Project/Allexchanges')
-# def getAllExchanges():
-# 	return ExchangeHandler().getAllExchanges()
+
+# GLOBAL STATISTICS
+@app.route('/datavengers/most/rack', methods = ['GET'])
+def getTop10WarehousesMostRacks():
+     return WarehouseHandler().getTop10WarehousesMostRacks()
+
+@app.route('/datavengers/most/incoming', methods = ['GET'])
+def getTop5WarehousesMostIncomings():
+     return WarehouseHandler().getTop5WarehousesMostIncomings()
+
+@app.route('/datavengers/most/deliver', methods = ['GET'])
+def getTop5WarehousesThatDeliverMostExchanges():
+     return WarehouseHandler().getTop5WarehousesThatDeliverMostExchanges()
+
+@app.route('/datavengers/most/transactions', methods = ['GET'])
+def getTop3UsersMostTransactions():
+    return UserHandler().getTop3UsersMostTransactions()
+
+@app.route('/datavengers/least/outgoing', methods = ['GET'])
+def getTop3WarehousesLeastOutgoings():
+    return WarehouseHandler().getTop3WarehousesLeastOutgoings()
+
+@app.route('/datavengers/most/city', methods = ['GET'])
+def getTop3WarehouseCitiesMostTransactions():
+    return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
+
+# LOCAL STATISTICS
+@app.route('/datavengers/profit/by/year', methods = ['GET'])
+def getProfitByYear():
+     return WarehouseHandler().getProfitByYear()
 
 if __name__ == '__main__':
     app.run(debug=True)

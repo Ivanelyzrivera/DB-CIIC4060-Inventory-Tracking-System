@@ -80,7 +80,43 @@ class WarehouseDAO:
         finally:
             cursor.close()
     
+    def getTop5WarehousesMostIncomings(self):
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID,W_Name,W_Address,W_City, count(I_ID) as incoming_count
+            FROM warehouse NATURAL INNER JOIN transaction NATURAL INNER JOIN incoming
+            GROUP BY W_ID,W_Name,W_Address,W_City
+            ORDER BY count(I_ID) desc
+            LIMIT 5
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+            
+    def getTop5WarehousesThatDeliverMostExchanges(self): # Top 5 warehouse that delivers the most exchanges
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID, W_Name, W_Address, W_City, COUNT(T_ID) AS MostExchanges
+            FROM warehouse NATURAL INNER JOIN transaction 
+            GROUP BY W_ID,W_Name,W_Address,W_City
+            ORDER BY MostExchanges DESC
+            LIMIT 5
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
 
+<<<<<<< HEAD
     # SELECT W_ID,W_Name,W_Address,W_City, count(r_id) as Rack_Count FROM warehouse NATURAL INNER JOIN rack GROUP BY W_ID,W_Name,W_Address,W_City ORDER BY count(r_id) desc LIMIT 10;
 
     def partTypeByWarehouse(self):
@@ -96,11 +132,26 @@ class WarehouseDAO:
             for row in cursor:
                 result.append(row)
             cursor.close()
+=======
+    def getTop3WarehouseCitiesMostTransactions(self):
+        cursor = self.conn.cursor()
+        query = """
+            select w_city, count(t_id) as transaction_count
+            FROM warehouse natural inner join transaction
+            group by w_city
+            order by count(t_id) desc
+            limit 3
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+>>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
             return result
         except Exception as e:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+<<<<<<< HEAD
 
     def warehouseRackLowStock(self, wid):
         cursor = self.conn.cursor()
@@ -117,9 +168,47 @@ class WarehouseDAO:
             for row in cursor:
                 result.append(row)
             cursor.close()
+=======
+    
+    def getTop3WarehousesLeastOutgoings(self):
+        cursor = self.conn.cursor()
+        query = """
+            select W_ID, count(o_id) as outgoing_transaction_count
+            from transaction natural inner join outgoing
+            group by W_ID
+            order by count(o_id)
+            limit 3
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error ocurred: ", e)
+        finally:
+            cursor.close()
+            
+            
+    def getProfitByYear(self): # Top 5 warehouse that delivers the most exchanges
+        cursor = self.conn.cursor()
+        query = """
+            SELECT W_ID, EXTRACT(YEAR FROM T_Date) AS TransactionYear, sum(P_Price * T_Quantity) AS ProfitByYear
+            FROM warehouse natural inner join transaction natural inner join parts
+            WHERE T_Date = 'year'
+            GROUP BY  W_ID, T_Date
+            ORDER BY ProfitByYear ASC
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+>>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
             return result
         except Exception as e:
             print("An error occurred: ", e)
         finally:
+<<<<<<< HEAD
             cursor.close()
 
+=======
+            cursor.close()
+>>>>>>> c1caa205d7af1f34c734fc4b57d9b02aa9b0d960
