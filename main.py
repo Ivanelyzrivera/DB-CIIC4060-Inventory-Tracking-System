@@ -256,7 +256,7 @@ def getTop5WarehousesThatDeliverMostExchanges():
 def getTop3UsersMostTransactions():
     return UserHandler().getTop3UsersMostTransactions()
 
-@app.route('/datavengers/most/transaction', methods = ['GET'])
+@app.route('/datavengers/least/outgoing', methods = ['GET'])
 def getTop3WarehousesLeastOutgoings(self):
     return WarehouseHandler().getTop3WarehousesLeastOutgoings()
 
