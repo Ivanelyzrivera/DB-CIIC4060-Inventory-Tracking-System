@@ -61,3 +61,15 @@ class RackDAO:
         count = cursor.rowcount
         self.conn.commit()
         return count
+    
+    def quantityOfPartsInRack(self,rid):
+        cursor = self.conn.cursor()
+        query = "Select R_Stock FROM Rack where r_id =%s"
+        try:
+            cursor.execute(query, (rid,))
+            result = cursor.fetchone()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

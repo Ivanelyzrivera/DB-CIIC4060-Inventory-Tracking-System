@@ -124,14 +124,14 @@ def getAllRacks():
         return RackHandler().getAllRacks()
     elif request.method == 'POST':
         data = request.json
-        return RackHandler().insertRack(data)
+        return RackHandler().insertRacks(data)
     else:
         return jsonify("NOT SUPPORTED"),405
 
 @app.route('/racks/<int:rid>',methods = ['GET','PUT','DELETE'])
 def getracksbyID(rid):
     if request.method == 'GET':
-         return RackHandler().getracksbyID(rid)
+         return RackHandler().getracksID(rid)
     elif request.method == 'DELETE':
          return RackHandler().deleteById(rid)
     elif request.method == 'PUT':
@@ -139,6 +139,11 @@ def getracksbyID(rid):
          return RackHandler().putById(rid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
+    
+@app.route('/racks/quantity/<int:rid>', methods = ['GET'])
+def quantityOfPartsInRack(rid):
+    return RackHandler().quantityOfPartsInRack(rid)
+
 
 
 @app.route('/users',methods=['GET', 'POST'])
