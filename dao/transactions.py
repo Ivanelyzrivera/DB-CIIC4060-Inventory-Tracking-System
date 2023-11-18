@@ -52,3 +52,23 @@ class TransactionDAO:
         count = cursor.rowcount
         self.conn.commit()
         return count
+
+    def top3DaysSmallestIncoming(self, wid):
+        cursor = self.conn.cursor()
+        query = """
+            select T_Date, T_Year, sum(P_Price * T_Quantity) as TotalDailyCost
+            from Transaction natural inner join Part natural inner join Incoming
+            where W_ID = %s
+            group by T_Date, T_Year
+            order by TotalDailyCost asc
+            limit 3
+    """
+        try:
+            cursor.execute(query, (wid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+        

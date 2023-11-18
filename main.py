@@ -298,7 +298,9 @@ def get5MostExpensiveRacks(wid):
 def get3UsersMostExchanges(wid):
     return UserHandler().get3UsersMostExchanges(wid)
 
-
+@app.route('/datavengers/warehouse/<int:wid>/transaction/leastcost', methods = ['GET'])
+def gettop3DaysSmallestIncoming(wid):
+    return TransactionHandler().top3DaysSmallestIncoming(wid)
 
 if __name__ == '__main__':
     app.run(debug=True)

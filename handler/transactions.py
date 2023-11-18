@@ -66,3 +66,15 @@ class TransactionHandler:
 				return jsonify ("Not Found"),400
 		else:
 			return jsonify("Bad Data or Unexpected attribute values, "), 400
+		
+	def top3DaysSmallestIncoming(self, wid):
+		dao = TransactionDAO()
+		try:
+			dbtuples = dao.top3DaysSmallestIncoming(wid)
+			result = []
+			for e in dbtuples:
+				result.append(e)
+			return jsonify(result)
+		except Exception as e:
+			print(f"An error occurred while getting all transactions: {e}")
+			return jsonify ({'error': 'An error occurred while retrieving transactions'}), 500
