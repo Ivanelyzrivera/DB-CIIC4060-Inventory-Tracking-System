@@ -294,5 +294,9 @@ def getProfitByYear():
 def get5MostExpensiveRacks(wid):
      return RackHandler().get5MostExpensiveRacks(wid)
 
+@app.route('/datavengers/warehouse/<int:wid>/users/exchange', methods = ['GET'])
+def get3UsersMostExchanges(wid):
+    return UserHandler().get3UsersMostExchanges(wid)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -93,3 +93,15 @@ class UserHandler:
         except Exception as e:
             print(f"An error occurred while getting all users: {e}")
             return jsonify({'error': 'An error occurred while retrieving users'}), 500
+
+    def get3UsersMostExchanges(self, wid):
+        dao = UserDAO()
+        try:
+            dbtuples = dao.get3UsersMostExchanges(wid)
+            result = []
+            for e in dbtuples:
+                result.append(e)
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all users: {e}")
+            return jsonify ({'error': 'An error occurred while retrieving racks'}), 500

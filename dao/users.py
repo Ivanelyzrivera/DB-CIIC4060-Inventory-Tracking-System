@@ -78,3 +78,22 @@ class UserDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+
+    def get3UsersMostExchanges(self, wid):
+        cursor = self.conn.cursor()
+        query = """
+            select U_ID_Destination as U_ID, count(*) AS exchange_count
+            from Exchange
+            where W_ID_Destination = %s
+            group by U_ID_Destination
+            order by exchange_count DESC
+            limit 3
+        """
+        try:
+            cursor.execute(query, (wid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
