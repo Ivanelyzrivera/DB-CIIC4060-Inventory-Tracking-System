@@ -84,7 +84,7 @@ def getsupplierbyID(sid):
          return jsonify("NOT SUPPORTED"),405
 
 
-@app.route('/datavengers/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
+@app.route('/datavengers/warehouses',methods=['GET', 'POST'])
 def getAllWarehouses():
     if request.method == 'GET':
         return  WarehouseHandler().getAllWarehouses()
@@ -111,23 +111,6 @@ def getwarehousebyID(wid):
 @app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET'])
 def partTypeByWarehouse():
     return WarehouseHandler().partTypeByWarehouse()
-
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET'])
-def warehouseRackLowStock(wid):
-    return WarehouseHandler().warehouseRackLowStock(wid)
-
-    
-#started route and logic for lowstock
-# @app.route('warehouse/<int:wid>/rack/lowstock')
-# def getlowstockracks(wid):
-#      racks = []
-#      for rack in RackHandler().getAllRacks():
-#           if 
-          
-#@app.route('/DB_Project/Allracks')
-#def getAllRacks():
-#    return RackHandler().getAllRacks()
-
 
 @app.route('/datavengers/racks',methods=['GET', 'POST'])
 def getAllRacks():
@@ -261,27 +244,27 @@ def getexchangebyID(eid):
          return jsonify("NOT SUPPORTED"),405
 
 # GLOBAL STATISTICS
-@app.route('/datavengers/most/rack', methods = ['GET'])
+@app.route('/datavengers/most/rack', methods = ['GET']) # Top 10 warehouses with the most racks
 def getTop10WarehousesMostRacks():
-     return WarehouseHandler().getTop10WarehousesMostRacks()
+     return WarehouseHandler().getTop10WarehousesMostRacks() 
 
-@app.route('/datavengers/most/incoming', methods = ['GET'])
+@app.route('/datavengers/most/incoming', methods = ['GET']) # Top 5 warehouses with the most incoming transactions
 def getTop5WarehousesMostIncomings():
      return WarehouseHandler().getTop5WarehousesMostIncomings()
 
-@app.route('/datavengers/most/deliver', methods = ['GET'])
+@app.route('/datavengers/most/deliver', methods = ['GET']) # Top 5 warehouses that delivers the most exchanges
 def getTop5WarehousesThatDeliverMostExchanges():
      return WarehouseHandler().getTop5WarehousesThatDeliverMostExchanges()
 
-@app.route('/datavengers/most/transactions', methods = ['GET'])
+@app.route('/datavengers/most/transactions', methods = ['GET']) # Top 3 users that made the most transactions
 def getTop3UsersMostTransactions():
     return UserHandler().getTop3UsersMostTransactions()
 
-@app.route('/datavengers/least/outgoing', methods = ['GET'])
+@app.route('/datavengers/least/outgoing', methods = ['GET']) # Top 3 warehouses with the least outgoing transactions
 def getTop3WarehousesLeastOutgoings():
     return WarehouseHandler().getTop3WarehousesLeastOutgoings()
 
-@app.route('/datavengers/most/city', methods = ['GET'])
+@app.route('/datavengers/most/city', methods = ['GET']) # Top 3 warehouses’ cities with the most transactions
 def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 
@@ -290,15 +273,29 @@ def getTop3WarehouseCitiesMostTransactions():
 def getProfitByYear(wid):
      return WarehouseHandler().getProfitByYear(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/expensive', methods = ['GET'])
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET']) #Top 5 racks with quantity under the 25% capacity threshold
+def warehouseRackLowStock(wid):
+    return WarehouseHandler().warehouseRackLowStock(wid)
+
+@app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['GET']) # Bottom 3 part’s type/material in the warehouse
+def warehouseBottom3(wid):
+     return WarehouseHandler().warehouseBottom3(wid)
+
+@app.route('/datavengers/warehouse/<int:wid>/rack/expensive', methods = ['GET']) #Top 5 most expensive racks in the warehouse
 def get5MostExpensiveRacks(wid):
      return RackHandler().get5MostExpensiveRacks(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/users/receivesmost', methods = ['GET'])
+@app.route('/datavengers/warehouse/<int:wid>/transaction/suppliers', methods = ['GET']) #Top 3 supplier that supplied to the warehouse
+def getTop3SuppliersPerWarehouse(wid):
+     return SupplierHandler().getTop3SuppliersPerWarehouse(wid)
+
+@app.route('/datavengers/warehouse/<int:wid>/users/receivesmost', methods = ['GET']) # Top 3 users that receives the most exchanges
 def get3UsersMostExchanges(wid):
     return UserHandler().get3UsersMostExchanges(wid)
 
-
+@app.route('/datavengers/warehouse/<int:wid>/transaction/leastcost', methods = ['GET']) # Top 3 days with the smallest incoming transactions’ cost
+def gettop3DaysSmallestIncoming(wid):
+    return TransactionHandler().top3DaysSmallestIncoming(wid)
 
 if __name__ == '__main__':
     app.run(debug=True)

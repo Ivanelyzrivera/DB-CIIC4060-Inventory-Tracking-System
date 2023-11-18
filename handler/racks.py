@@ -93,3 +93,4 @@ class RackHandler:
         except Exception as e:
             print(f"An error occurred while getting all racks: {e}")
             return jsonify({'error': 'An error occurred while retrieving racks'}), 500   
+        

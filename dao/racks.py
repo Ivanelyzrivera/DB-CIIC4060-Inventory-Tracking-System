@@ -92,3 +92,5 @@ class RackDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+            
+         
