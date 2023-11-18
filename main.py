@@ -290,9 +290,9 @@ def getTop3WarehouseCitiesMostTransactions():
 def getProfitByYear():
      return WarehouseHandler().getProfitByYear()
 
-@app.route('/datavengers/most/expensive/racks', methods = ['GET'])
-def get5MostExpensiveRacks():
-     return RackHandler().get5MostExpensiveRacks()
+@app.route('/datavengers/<int:wid>/rack/expensive', methods = ['GET'])
+def get5MostExpensiveRacks(wid):
+     return RackHandler().get5MostExpensiveRacks(wid)
 
 if __name__ == '__main__':
     app.run(debug=True)

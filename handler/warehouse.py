@@ -139,7 +139,8 @@ class WarehouseHandler:
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
-            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500   
+            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500  
+         
     def partTypeByWarehouse(self):
         dao = WarehouseDAO()
         try:

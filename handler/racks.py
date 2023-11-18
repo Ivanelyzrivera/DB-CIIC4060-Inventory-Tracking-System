@@ -82,10 +82,10 @@ class RackHandler:
         else:
             return jsonify("Not found"), 404
 
-    def get5MostExpensiveRacks(self):
+    def get5MostExpensiveRacks(self, wid):
         dao = RackDAO()
         try:
-            dbtuples = dao.get5MostExpensiveRacks()
+            dbtuples = dao.get5MostExpensiveRacks(wid)
             result = []
             for e in dbtuples:
                 result.append(self.mapToDict(e))

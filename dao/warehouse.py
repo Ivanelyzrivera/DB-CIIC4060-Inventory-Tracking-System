@@ -173,14 +173,16 @@ class WarehouseDAO:
             cursor.close()
             
             
-    def getProfitByYear(self): # Top 5 warehouse that delivers the most exchanges
+    def getProfitByYear(self):
         cursor = self.conn.cursor()
         query = """
-            SELECT W_ID, EXTRACT(YEAR FROM T_Date) AS TransactionYear, sum(P_Price * T_Quantity) AS ProfitByYear
-            FROM warehouse natural inner join transaction natural inner join parts
-            WHERE T_Date = 'year'
-            GROUP BY  W_ID, T_Date
-            ORDER BY ProfitByYear ASC
+            select W_ID, extract(year from T_Date) as TransactionYear, sum(P_Price * T_Quantity) as ProfitByYear
+            from warehouse
+            natural inner join transaction
+            natural inner join part
+            where extract(year from T_Date) = %s
+            group by W_ID, TransactionYear
+            order by TransactionYear, ProfitByYear desc
         """
         try:
             cursor.execute(query)

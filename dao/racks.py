@@ -74,11 +74,12 @@ class RackDAO:
         finally:
             cursor.close()
 
-    def get5MostExpensiveRacks(self):
+    def get5MostExpensiveRacks(self, wid):
         cursor = self.conn.cursor()
         query = """
             select rack.R_ID, sum(part.P_Price * rack.R_Stock) as total_value
             from rack natural inner join part
+            where w_id = %s 
             group by rack.R_ID
             order by sum(part.P_Price * rack.R_Stock) desc
             limit 5
