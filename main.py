@@ -290,6 +290,10 @@ def getTop3WarehouseCitiesMostTransactions():
 def getProfitByYear():
      return WarehouseHandler().getProfitByYear()
 
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock', methods = ['GET'])
+def get5TopRacksUnder25Capacity():
+     return WarehouseHandler().get5TopRacksUnder25Capacity() #Top 5 racks with quantity under the 25% capacity threshold
+
 @app.route('/datavengers/warehouse/<int:wid>/rack/expensive', methods = ['GET'])
 def get5MostExpensiveRacks(wid):
      return RackHandler().get5MostExpensiveRacks(wid)
