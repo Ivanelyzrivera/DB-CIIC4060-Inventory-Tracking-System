@@ -85,7 +85,7 @@ class RackDAO:
             limit 5
         """
         try:
-            cursor.execute(query)
+            cursor.execute(query, (wid,))
             result = cursor.fetchall()
             return result
         except Exception as e:

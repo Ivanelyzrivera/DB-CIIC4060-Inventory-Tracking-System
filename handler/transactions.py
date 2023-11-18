@@ -53,7 +53,7 @@ class TransactionHandler:
 	def putByID(self, tid, data):
 		date = data['T_Date']
 		quantity = data['T_Quantity']
-  		year = data['T_Year']
+		year = data['T_Year']
 		partsID = data['P_ID']
 		warehouseID = data['W_ID']
 		userID = data['U_ID']
