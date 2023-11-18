@@ -60,3 +60,22 @@ class SupplierDAO:
         count = cursor.rowcount
         self.conn.commit()
         return count
+    
+    def getTop3SuppliersPerWarehouse(self, wid):
+        cursor = self.conn.cursor()
+        query = """
+            Select s_id, s_name, count(t_id) as transaction_count
+            FROM supplier natural inner join incoming natural inner join transaction
+            where w_id = %s
+            group by s_id, s_name
+            order by count(t_id) desc
+            limit 3
+        """
+        try:
+            cursor.execute(query, (wid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

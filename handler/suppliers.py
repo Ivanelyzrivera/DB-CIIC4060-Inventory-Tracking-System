@@ -74,6 +74,18 @@ class SupplierHandler:
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
         
+    def getTop3SuppliersPerWarehouse(self,wid):
+        dao = SupplierDAO()
+        try:
+            dbtuples = dao.getTop3SuppliersPerWarehouse(wid)
+            result = []
+            for e in dbtuples:
+                result.append(e)
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all warehouses: {e}")
+            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+        
 
 
 

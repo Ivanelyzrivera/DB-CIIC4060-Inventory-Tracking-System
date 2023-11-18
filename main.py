@@ -298,6 +298,10 @@ def get5TopRacksUnder25Capacity():
 def get5MostExpensiveRacks(wid):
      return RackHandler().get5MostExpensiveRacks(wid)
 
+@app.route('/datavengers/warehouse/<int:wid>/transaction/suppliers', methods = ['GET'])
+def getTop3SuppliersPerWarehouse(wid):
+     return SupplierHandler().getTop3SuppliersPerWarehouse(wid)
+
 @app.route('/datavengers/warehouse/<int:wid>/users/receivesmost', methods = ['GET'])
 def get3UsersMostExchanges(wid):
     return UserHandler().get3UsersMostExchanges(wid)
