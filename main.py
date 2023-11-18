@@ -135,14 +135,14 @@ def getAllRacks():
         return RackHandler().getAllRacks()
     elif request.method == 'POST':
         data = request.json
-        return RackHandler().insertRack(data)
+        return RackHandler().insertRacks(data)
     else:
         return jsonify("NOT SUPPORTED"),405
 
 @app.route('/datavengers/racks/<int:rid>',methods = ['GET','PUT','DELETE'])
-def getracksbyID(rid):
+def getracksID(rid):
     if request.method == 'GET':
-         return RackHandler().getracksbyID(rid)
+         return RackHandler().getracksID(rid)
     elif request.method == 'DELETE':
          return RackHandler().deleteById(rid)
     elif request.method == 'PUT':
@@ -286,9 +286,9 @@ def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 
 # LOCAL STATISTICS
-@app.route('/datavengers/profit/by/year', methods = ['GET'])
-def getProfitByYear():
-     return WarehouseHandler().getProfitByYear()
+@app.route('/datavengers/profit/<int:wid>/year', methods = ['GET'])
+def getProfitByYear(wid):
+     return WarehouseHandler().getProfitByYear(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/expensive', methods = ['GET'])
 def get5MostExpensiveRacks(wid):

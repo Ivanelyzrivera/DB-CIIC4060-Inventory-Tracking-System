@@ -173,19 +173,18 @@ class WarehouseDAO:
             cursor.close()
             
             
-    def getProfitByYear(self):
+    def getProfitByYear(self,wid):
         cursor = self.conn.cursor()
         query = """
-            select W_ID, extract(year from T_Date) as TransactionYear, sum(P_Price * T_Quantity) as ProfitByYear
-            from warehouse
-            natural inner join transaction
-            natural inner join part
-            where extract(year from T_Date) = %s
-            group by W_ID, TransactionYear
-            order by TransactionYear, ProfitByYear desc
+        SELECT
+    w_name AS WarehouseName,t_year AS Year,SUM(o_sellprice - (p_price * t_quantity)) AS TotalProfit
+    FROM Warehouse NATURAL JOIN Transaction natural inner join Outgoing natural inner join Incoming  natural inner join Part 
+    WHERE w_id = %s 
+    GROUP BY w_id, t_year, w_name
+    ORDER BY t_year;
         """
         try:
-            cursor.execute(query)
+            cursor.execute(query, (wid,))
             result = cursor.fetchall()
             return result
         except Exception as e:

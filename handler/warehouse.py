@@ -129,17 +129,31 @@ class WarehouseHandler:
             print(f"An error occurred while getting all warehouses: {e}")
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
         
-    def getProfitByYear(self):
+   
+    # In your handler class
+    # In your handler class
+    def getProfitByYear(self, wid):
         dao = WarehouseDAO()
-        try:
-            dbtuples = dao.getProfitByYear()
-            result =[]
-            for e in dbtuples:
-                result.append(self.mapToDict(e))
+        dbtuples = dao.getProfitByYear(wid)
+
+        if dbtuples:
+            result = []
+
+            for row in dbtuples:
+                result.append({
+                    'name': row[0],  # Assuming year is the second element in the tuple
+                    "year": row[1],
+                    'Profit': row[2]  # Assuming SomeOtherInfo is the fourth element in the tuple
+                })
+
             return jsonify(result)
-        except Exception as e:
-            print(f"An error occurred while getting all warehouses: {e}")
-            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500  
+        else:
+            return jsonify("Not found"), 404
+
+
+
+
+
          
     def partTypeByWarehouse(self):
         dao = WarehouseDAO()
