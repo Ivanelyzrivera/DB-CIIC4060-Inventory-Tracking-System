@@ -1,0 +1,93 @@
+CREATE TABLE Warehouse (
+    W_ID SERIAL PRIMARY KEY,
+    W_Name VARCHAR(12),
+    W_Address VARCHAR(15),
+    W_City VARCHAR(15)
+);
+
+CREATE TABLE Supplier (
+    S_ID SERIAL PRIMARY KEY,
+    S_Name VARCHAR(255),
+    S_Address VARCHAR(255),
+    S_Email VARCHAR(255),
+    S_PhoneNumber VARCHAR(20),
+    S_City VARCHAR(100)
+);
+
+CREATE TABLE Part (
+    P_ID SERIAL PRIMARY KEY,
+    P_Type VARCHAR(10),
+    P_Color VARCHAR(8),
+    P_Weight INT,
+    P_Name VARCHAR(15),
+    P_Price INT,
+    P_Manufacturer VARCHAR(15),
+    S_ID INT,
+    FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID)
+);
+
+CREATE TABLE Users (
+    U_ID SERIAL PRIMARY KEY,
+    U_FirstName VARCHAR(12),
+    U_LastName VARCHAR(12),
+    U_Email VARCHAR(30),
+    U_Password VARCHAR(20),
+    U_Salary INT,
+    U_HireDate VARCHAR(10),
+    U_Position VARCHAR(20),
+    W_ID INT,
+    FOREIGN KEY (W_ID) REFERENCES Warehouse(W_ID)
+);
+
+CREATE TABLE Rack (
+    R_ID SERIAL PRIMARY KEY,
+    R_Capacity INT,
+    R_Stock INT,
+    W_ID INT, -- Foreign key reference to Warehouse
+    P_ID INT, -- Foreign key reference Parts
+    FOREIGN KEY (W_ID) REFERENCES Warehouse(W_ID),
+    FOREIGN KEY (P_ID) REFERENCES Part(P_ID)
+);
+
+CREATE TABLE Transaction (
+    T_ID SERIAL PRIMARY KEY,
+    T_Date VARCHAR(10),
+    T_Year INT,
+    T_Quantity INT,
+    P_ID INT, -- Foreign key reference to parts table
+    W_ID INT, -- Foreign key reference to Warehouse table
+    U_ID INT, -- Foreign key reference to User table
+    FOREIGN KEY (P_ID) REFERENCES Part(P_ID),
+    FOREIGN KEY (W_ID) REFERENCES Warehouse(W_ID),
+    FOREIGN KEY (U_ID) REFERENCES Users(U_ID)
+);
+
+CREATE TABLE Outgoing (
+    O_ID SERIAL PRIMARY KEY,
+    O_SellPrice INT,
+    O_Customer VARCHAR(20),
+    O_Destination VARCHAR(20),
+    T_ID INT, -- Foreign key reference to transaction table
+    FOREIGN KEY (T_ID) REFERENCES Transaction(T_ID)
+);
+
+CREATE TABLE Incoming (
+    I_ID SERIAL PRIMARY KEY,
+    R_ID INT,   -- Foreign key reference to Rack table
+    S_ID INT,   -- Foreign key reference to Supplier table
+    T_ID INT,   -- Foreign key reference to Transaction table
+    FOREIGN KEY (R_ID) REFERENCES Rack(R_ID),
+    FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID),
+    FOREIGN KEY (T_ID) REFERENCES Transaction(T_ID)
+);
+
+CREATE TABLE Exchange (
+    E_ID SERIAL PRIMARY KEY,
+    E_Reason VARCHAR(100),
+    W_ID_Destination INT,    -- Foreign key reference to Warehouse table for destination
+    U_ID_Destination INT, -- Foreign key reference to User table for destination
+    T_ID INT, -- Foreign key reference to Transaction table
+    FOREIGN KEY (T_ID) REFERENCES Transaction(T_ID),
+    FOREIGN KEY (U_ID_Destination) REFERENCES Users(U_ID),
+    FOREIGN KEY (W_ID_Destination) REFERENCES Warehouse(W_ID)
+);
