@@ -8,9 +8,10 @@ class TransactionHandler:
 		result['T_ID'] = t[0]
 		result['T_Date'] = t[1]
 		result['T_Quantity'] = t[2]
-		result['P_ID'] = t[3]
-		result['W_ID'] = t[4]
-		result['U_ID'] = t[5]
+		result['T_Year'] = t[3]
+		result['P_ID'] = t[4]
+		result['W_ID'] = t[5]
+		result['U_ID'] = t[6]
 		return result
 
 	def getAllTransactions(self):
@@ -36,12 +37,13 @@ class TransactionHandler:
 	def insertTransaction(self, data):
 		date = data['T_Date']
 		quantity = data['T_Quantity']
+		year = data['T_Year']
 		partsID = data['P_ID']
 		warehouseID = data['W_ID']
 		userID = data['U_ID']
-		if date and quantity and partsID and warehouseID and userID:
+		if date and quantity and year and partsID and warehouseID and userID:
 			dao = TransactionDAO()
-			tid = dao.insertTransaction(date,quantity,partsID,warehouseID,userID)
+			tid = dao.insertTransaction(date,quantity,year,partsID,warehouseID,userID)
 			data['T_ID'] = tid
 			return jsonify(data),201
 		else:
@@ -51,12 +53,13 @@ class TransactionHandler:
 	def putByID(self, tid, data):
 		date = data['T_Date']
 		quantity = data['T_Quantity']
+  		year = data['T_Year']
 		partsID = data['P_ID']
 		warehouseID = data['W_ID']
 		userID = data['U_ID']
-		if tid and date and quantity and partsID and warehouseID and userID:
+		if tid and date and quantity and year and partsID and warehouseID and userID:
 			dao = TransactionDAO()
-			flag = dao.putById(tid,date,quantity,partsID,warehouseID,userID)
+			flag = dao.putById(tid,date,quantity,year,partsID,warehouseID,userID)
 			if flag:
 				return jsonify(data),201
 			else:
