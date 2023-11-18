@@ -94,16 +94,3 @@ class RackHandler:
             print(f"An error occurred while getting all racks: {e}")
             return jsonify({'error': 'An error occurred while retrieving racks'}), 500   
         
-   # def get5TopRacksUnder25Capacity(self, wid):
-    #    dao = RackDAO()
-     #   try:
-      #      dbtuples = dao.get5TopRacksUnder25Capacity(wid)
-       #     result = []
-        #    for e in dbtuples:
-         #       result.append(e)
-          #  return jsonify(result)
-       # except Exception as e:
-        #    print(f"An error occurred while getting all racks: {e}")
-         #   return jsonify({'error': 'An error occurred while retrieving racks'}), 500      
-        
-        

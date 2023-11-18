@@ -84,7 +84,7 @@ def getsupplierbyID(sid):
          return jsonify("NOT SUPPORTED"),405
 
 
-@app.route('/datavengers/warehouses',methods=['GET', 'POST']) # return WarehouseHandler().getAllWarehouses()
+@app.route('/datavengers/warehouses',methods=['GET', 'POST'])
 def getAllWarehouses():
     if request.method == 'GET':
         return  WarehouseHandler().getAllWarehouses()
@@ -273,13 +273,9 @@ def getTop3WarehouseCitiesMostTransactions():
 def getProfitByYear():
      return WarehouseHandler().getProfitByYear()
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET'])
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET']) #Top 5 racks with quantity under the 25% capacity threshold
 def warehouseRackLowStock(wid):
     return WarehouseHandler().warehouseRackLowStock(wid)
-
-#@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock', methods = ['GET'])
-#def get5TopRacksUnder25Capacity():
-#     return WarehouseHandler().get5TopRacksUnder25Capacity() #Top 5 racks with quantity under the 25% capacity threshold
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['GET']) # Bottom 3 part’s type/material in the warehouse
 def warehouseBottom3(wid):

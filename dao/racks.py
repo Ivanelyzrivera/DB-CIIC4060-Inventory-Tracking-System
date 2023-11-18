@@ -94,20 +94,3 @@ class RackDAO:
             cursor.close()
             
          
-    #def get5TopRacksUnder25Capacity(self, wid): #Top 5 racks with quantity under the 25% capacity threshold
-     #   cursor = self.conn.cursor()
-     #   query = """
-      #      SELECT R_ID, R_Capacity, R_Stock, R_Capacity * 0.25 AS CapacityThreshold
-       #     FROM Rack
-        #    WHERE R_Stock < R_Capacity * 0.25
-         #   ORDER BY R_Stock ASC
-          #  LIMIT 5;
-       # """
-        #try:
-         #   cursor.execute(query, (wid,))
-          #  result = cursor.fetchall()
-           # return result
-        #except Exception as e:
-         #   print("An error occurred: ", e)
-        #finally:
-         #   cursor.close()
