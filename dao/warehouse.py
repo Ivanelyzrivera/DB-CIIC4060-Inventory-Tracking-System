@@ -211,3 +211,20 @@ class WarehouseDAO:
             print("An error occurred: ", e)
         finally:
             cursor.close()
+            
+    def warehouseBottom3(self,wid): # Bottom 3 part’s type/material in the warehouse
+        cursor = self.conn.cursor()
+        query = """
+            SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID
+            FROM Part natural INNER JOIN rack natural inner join warehouse
+            ORDER BY P_Type ASC
+            LIMIT 3;
+        """
+        try:
+            cursor.execute(query,(wid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()

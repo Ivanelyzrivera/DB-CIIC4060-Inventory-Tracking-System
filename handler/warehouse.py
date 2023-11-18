@@ -154,7 +154,7 @@ class WarehouseHandler:
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
         
 
-    def warehouseRackLowStock(self, wid):
+    def warehouseRackLowStock(self, wid): # Top 5 racks with quantity under the 25% capacity
         dao = WarehouseDAO()
         try:
             dbtuples = dao.warehouseRackLowStock(wid)
@@ -170,8 +170,21 @@ class WarehouseHandler:
                 result.append(rack_info)
             return jsonify(result)
         except Exception as e:
-            print(f"An error occurred while getting low stock racks: {e}")
+            print(f"An error occurred while getting  the low stock racks: {e}")
             return jsonify({'error': 'An error occurred while retrieving low stock racks'}), 400
+        
+        
+    def warehouseBottom3(self,wid):
+        dao = WarehouseDAO()
+        try:
+            dbtuples = dao.warehouseBottom3(wid)
+            result =[]
+            for e in dbtuples:
+                result.append(e)
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting bottom 3 type/material from the warehouses: {e}")
+            return jsonify({'error': 'An error occurred while retrieving  bottom 3 type/material'}), 500
 
 
     
