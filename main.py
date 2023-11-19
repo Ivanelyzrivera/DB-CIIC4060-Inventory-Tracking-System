@@ -273,8 +273,10 @@ def getTop3WarehouseCitiesMostTransactions():
 def getProfitByYear(wid):
      return WarehouseHandler().getProfitByYear(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
-def warehouseRackLowStock(wid):
+@app.route('/datavengers/warehouse/<int:uid>/rack/lowstock/<int:wid>',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
+def warehouseRackLowStock(uid, wid):
+    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+        return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse

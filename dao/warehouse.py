@@ -250,3 +250,15 @@ ORDER BY ay.T_Year;
             print("An error occurred: ", e)
         finally:
             cursor.close()
+
+    def validateWarehouseAssociation(self, uid, wid):
+        cursor = self.conn.cursor()
+        query = """"
+            select *
+            from Users
+            where U_ID = %s and W_ID = %s
+        """
+        cursor.execute(query, (uid, wid))
+        result = cursor.fetchone()
+        cursor.close()
+        return result
