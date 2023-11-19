@@ -200,6 +200,7 @@ class WarehouseHandler:
             print(f"An error occurred while getting bottom 3 type/material from the warehouses: {e}")
             return jsonify({'error': 'An error occurred while retrieving  bottom 3 type/material'}), 500
 
-
-    
-        
+    def validateUserWarehouse(self, uid, wid):
+        dao = WarehouseDAO()
+        warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
+        return warehouseAssociation is not None

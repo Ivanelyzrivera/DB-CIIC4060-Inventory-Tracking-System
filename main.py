@@ -274,7 +274,9 @@ def getProfitByYear(wid):
      return WarehouseHandler().getProfitByYear(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['GET']) #Top 5 racks with quantity under the 25% capacity threshold
-def warehouseRackLowStock(wid):
+def warehouseRackLowStock(uid, wid):
+    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+        return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['GET']) # Bottom 3 part’s type/material in the warehouse
