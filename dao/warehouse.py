@@ -253,7 +253,7 @@ ORDER BY ay.T_Year;
 
     def validateWarehouseAssociation(self, uid, wid):
         cursor = self.conn.cursor()
-        query = """"
+        query = """
             select *
             from Users
             where U_ID = %s and W_ID = %s
