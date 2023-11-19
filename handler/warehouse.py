@@ -130,13 +130,10 @@ class WarehouseHandler:
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
         
    
-    # In your handler class
-    # In your handler class
     def getProfitByYear(self, wid):
         dao = WarehouseDAO()
         dbtuples = dao.getProfitByYear(wid)
     
-        print("Result tuples:", dbtuples)  # Add this line to print the result tuples
 
         if dbtuples:
             result = []
