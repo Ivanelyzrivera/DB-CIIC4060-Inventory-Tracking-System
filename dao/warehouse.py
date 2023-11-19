@@ -3,7 +3,7 @@ import psycopg2
 
 class WarehouseDAO:
     def __init__(self):
-        connection_url = "host = ec2-3-210-173-88.compute-1.amazonaws.com dbname =%s user=%s password=%s" % (pg_config['dbname'],
+        connection_url = "host = localhost dbname =%s user=%s password=%s" % (pg_config['dbname'],
          pg_config['user'],
          pg_config['password'])
         print("Connection URL: " + connection_url)
@@ -38,9 +38,9 @@ class WarehouseDAO:
             cursor.close()
 
 
-    def insertWarehouse(self,name,address,city, price):
+    def insertWarehouse(self,name,address,city):
         cursor = self.conn.cursor()
-        query = "insert into warehouse(W_Name,W_Address,W_City)) values (%s, %s, %s, %s) returning W_ID"
+        query = "insert into warehouse(W_Name,W_Address,W_City) values (%s, %s, %s) returning W_ID"
         cursor.execute(query, (name, address, city,))
         W_ID = cursor.fetchone()[0]
         self.conn.commit()
@@ -253,7 +253,7 @@ ORDER BY ay.T_Year;
 
     def validateWarehouseAssociation(self, uid, wid):
         cursor = self.conn.cursor()
-        query = """"
+        query = """
             select *
             from Users
             where U_ID = %s and W_ID = %s
