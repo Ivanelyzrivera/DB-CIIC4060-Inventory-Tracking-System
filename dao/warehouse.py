@@ -186,7 +186,7 @@ class WarehouseDAO:
                            LEFT JOIN Incoming i ON t.T_ID = i.T_ID
                            LEFT JOIN Rack r ON i.R_ID = r.R_ID
                            LEFT JOIN Part p ON r.P_ID = p.P_ID
-                  WHERE t.W_ID = 2
+                  WHERE t.W_ID = %s
                   GROUP BY ay.T_Year
                   ORDER BY ay.T_Year)
 
@@ -195,7 +195,7 @@ class WarehouseDAO:
                  FROM all_years ay
                           LEFT JOIN Transaction t ON ay.T_Year = t.T_Year
                           LEFT JOIN Outgoing o ON t.T_ID = o.T_ID
-                 WHERE t.W_ID = 2
+                 WHERE t.W_ID = %s
                  GROUP BY ay.T_Year
                  ORDER BY ay.T_Year)
 
