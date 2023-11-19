@@ -277,7 +277,7 @@ def getProfitByYear(wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().getProfitByYear(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock/',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
 def warehouseRackLowStock(wid, uid):
     data = request.json
     uid = UserHandler().getUserID(data)
@@ -285,7 +285,7 @@ def warehouseRackLowStock(wid, uid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/material/', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
+@app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
 def warehouseBottom3(wid, uid):
     data = request.json
     uid = UserHandler().getUserID(data)
