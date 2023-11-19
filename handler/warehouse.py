@@ -135,20 +135,23 @@ class WarehouseHandler:
     def getProfitByYear(self, wid):
         dao = WarehouseDAO()
         dbtuples = dao.getProfitByYear(wid)
+    
+        print("Result tuples:", dbtuples)  # Add this line to print the result tuples
 
         if dbtuples:
             result = []
-
             for row in dbtuples:
                 result.append({
-                    'name': row[0],  # Assuming year is the second element in the tuple
-                    "year": row[1],
-                    'Profit': row[2]  # Assuming SomeOtherInfo is the fourth element in the tuple
+                    'profit_year': row[0],
+                    'profit': row[1]
                 })
-
+            print(result)
             return jsonify(result)
         else:
             return jsonify("Not found"), 404
+
+
+
 
 
 
