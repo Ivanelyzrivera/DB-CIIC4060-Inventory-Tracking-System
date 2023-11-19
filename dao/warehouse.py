@@ -38,7 +38,7 @@ class WarehouseDAO:
             cursor.close()
 
 
-    def insertWarehouse(self,name,address,city,):
+    def insertWarehouse(self,name,address,city):
         cursor = self.conn.cursor()
         query = "insert into warehouse(W_Name,W_Address,W_City) values (%s, %s, %s) returning W_ID"
         cursor.execute(query, (name, address, city,))
