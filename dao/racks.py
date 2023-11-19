@@ -40,15 +40,15 @@ class RackDAO:
 
     def insertRacks(self,capacity, stock, warehouseID, partID):
         cursor = self.conn.cursor()
-        query = "insert into racks(R_Capacity R_Stock, W_ID, P_ID) values (%s, %s, %s, %s) returning R_ID"
+        query = "insert into rack(R_Capacity, R_Stock, W_ID, P_ID) values (%s, %s, %s, %s) returning R_ID"
         cursor.execute(query, (capacity, stock, warehouseID, partID,))
-        P_ID = cursor.fetchone()[0]
+        R_ID = cursor.fetchone()[0]
         self.conn.commit()
-        return P_ID
+        return R_ID
     
     def deleteById(self, rid):
         cursor = self.conn.cursor()
-        query = " delete FROM Part where p_id =%s"
+        query = " delete FROM Rack where r_id =%s"
         cursor.execute(query, (rid,))
         count = cursor.rowcount
         self.conn.commit()
@@ -56,7 +56,7 @@ class RackDAO:
         
     def putById(self,rid ,capacity, stock, warehouseID, partID):
         cursor = self.conn.cursor()
-        query = "update racks set R_Capacity = %s, R_Stock = %s, W_ID = %s, P_ID = %s where r_id = %s;"
+        query = "update rack set R_Capacity = %s, R_Stock = %s, W_ID = %s, P_ID = %s where r_id = %s;"
         cursor.execute(query, (capacity, stock, warehouseID, partID, rid,))
         count = cursor.rowcount
         self.conn.commit()
