@@ -78,3 +78,8 @@ class TransactionHandler:
 		except Exception as e:
 			print(f"An error occurred while getting all transactions: {e}")
 			return jsonify ({'error': 'An error occurred while retrieving transactions'}), 500
+
+	def validateUserWarehouse(self, uid, wid):
+		dao = TransactionDAO()
+		warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
+		return warehouseAssociation is not None

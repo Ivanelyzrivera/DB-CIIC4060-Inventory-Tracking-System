@@ -105,3 +105,8 @@ class UserHandler:
         except Exception as e:
             print(f"An error occurred while getting all users: {e}")
             return jsonify ({'error': 'An error occurred while retrieving racks'}), 500
+        
+    def validateUserWarehouse(self, uid, wid):
+        dao = UserDAO()
+        warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
+        return warehouseAssociation is not None

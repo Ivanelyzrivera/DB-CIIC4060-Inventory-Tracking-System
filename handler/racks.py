@@ -94,3 +94,7 @@ class RackHandler:
             print(f"An error occurred while getting all racks: {e}")
             return jsonify({'error': 'An error occurred while retrieving racks'}), 500   
         
+    def validateUserWarehouse(self, uid, wid):
+        dao = RackDAO()
+        warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
+        return warehouseAssociation is not None

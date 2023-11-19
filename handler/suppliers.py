@@ -86,8 +86,7 @@ class SupplierHandler:
             print(f"An error occurred while getting all warehouses: {e}")
             return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
         
-
-
-
-
-
+    def validateUserWarehouse(self, uid, wid):
+        dao = SupplierDAO()
+        warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
+        return warehouseAssociation is not None
