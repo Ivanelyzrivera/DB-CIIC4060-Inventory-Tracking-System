@@ -26,9 +26,9 @@ class TransactionHandler:
 			print(f"An error occurred while getting all transactions: {e}")
 			return jsonify({'error': 'An error occurred while retrieving transactions'}), 500
 
-	def getTransactionById(self, tid):
+	def getTransactionByID(self, tid):
 		dao = TransactionDAO()
-		result = dao.getTransactionById(tid)
+		result = dao.getTransactionByID(tid)
 		if result:
 			return jsonify(self.mapToDict(result))
 		else:

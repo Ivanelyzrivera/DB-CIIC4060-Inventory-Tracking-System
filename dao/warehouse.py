@@ -3,7 +3,7 @@ import psycopg2
 
 class WarehouseDAO:
     def __init__(self):
-        connection_url = "host = localhost dbname =%s user=%s password=%s" % (pg_config['dbname'],
+        connection_url = "host = ec2-3-210-173-88.compute-1.amazonaws.com dbname =%s user=%s password=%s" % (pg_config['dbname'],
          pg_config['user'],
          pg_config['password'])
         print("Connection URL: " + connection_url)
@@ -176,15 +176,38 @@ class WarehouseDAO:
     def getProfitByYear(self,wid):
         cursor = self.conn.cursor()
         query = """
-            SELECT
-            w_name AS WarehouseName,t_year AS Year,SUM(o_sellprice - (p_price * t_quantity)) AS TotalProfit
-            FROM Warehouse NATURAL JOIN Transaction natural inner join Outgoing natural inner join Incoming  natural inner join Part 
-            WHERE w_id = %s 
-            GROUP BY w_id, t_year, w_name
-            ORDER BY t_year;
+            WITH all_years AS (SELECT DISTINCT T_Year
+                   FROM Transaction)
+
+   , expenses AS (SELECT ay.T_Year                              AS profit_year,
+                         COALESCE(SUM(P_Price * T_Quantity), 0) AS total_expenses
+                  FROM all_years ay
+                           LEFT JOIN Transaction t ON ay.T_Year = t.T_Year
+                           LEFT JOIN Incoming i ON t.T_ID = i.T_ID
+                           LEFT JOIN Rack r ON i.R_ID = r.R_ID
+                           LEFT JOIN Part p ON r.P_ID = p.P_ID
+                  WHERE t.W_ID = %s
+                  GROUP BY ay.T_Year
+                  ORDER BY ay.T_Year)
+
+   , revenue AS (SELECT ay.T_Year                                  AS profit_year,
+                        COALESCE(SUM(O_SellPrice * T_Quantity), 0) AS total_revenue
+                 FROM all_years ay
+                          LEFT JOIN Transaction t ON ay.T_Year = t.T_Year
+                          LEFT JOIN Outgoing o ON t.T_ID = o.T_ID
+                 WHERE t.W_ID = %s
+                 GROUP BY ay.T_Year
+                 ORDER BY ay.T_Year)
+
+SELECT ay.T_Year                                                AS profit_year,
+       COALESCE(total_revenue, 0) - COALESCE(total_expenses, 0) AS profit
+FROM all_years ay
+         LEFT JOIN expenses e ON ay.T_Year = e.profit_year
+         LEFT JOIN revenue r ON ay.T_Year = r.profit_year
+ORDER BY ay.T_Year;
         """
         try:
-            cursor.execute(query, (wid,))
+            cursor.execute(query, (wid, wid,))
             result = cursor.fetchall()
             return result
         except Exception as e:
