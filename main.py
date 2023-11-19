@@ -271,7 +271,9 @@ def getTop3WarehouseCitiesMostTransactions():
 # LOCAL STATISTICS
 @app.route('/datavengers/profit/<int:wid>/year/<int:uid>', methods = ['POST'])
 def getProfitByYear(wid, uid):
-     return WarehouseHandler().getProfitByYear(wid)
+    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+        return jsonify({"error": "Unauthorized access"})
+    return WarehouseHandler().getProfitByYear(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/lowstock/<int:uid>',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
 def warehouseRackLowStock(wid, uid):
