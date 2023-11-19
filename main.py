@@ -269,21 +269,27 @@ def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 
 # LOCAL STATISTICS
-@app.route('/datavengers/profit/<int:wid>/year/<int:uid>', methods = ['POST'])
-def getProfitByYear(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+@app.route('/datavengers/warehouse/<int:wid>/profit', methods = ['POST'])
+def getProfitByYear(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().getProfitByYear(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock/<int:uid>',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock/',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
 def warehouseRackLowStock(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
 @app.route('/datavengers/warehouse/<int:wid>/rack/material/<int:uid>', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
 def warehouseBottom3(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseBottom3(wid)
 
@@ -308,7 +314,6 @@ def get3UsersMostExchanges(wid):
     data = request.json
     uid = UserHandler().getUserID(data)
     if not UserHandler().validateUserWarehouse(uid, wid):
-        data = request.json
         return jsonify({"error": "Unauthorized access"})
     return UserHandler().get3UsersMostExchanges(wid)
 
