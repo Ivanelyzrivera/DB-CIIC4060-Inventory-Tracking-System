@@ -108,7 +108,7 @@ def getwarehousebyID(wid):
          return jsonify("NOT SUPPORTED"),405
     
 
-@app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET'])
+@app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET']) 
 def partTypeByWarehouse():
     return WarehouseHandler().partTypeByWarehouse()
 
@@ -243,28 +243,28 @@ def getexchangebyID(eid):
     else:
          return jsonify("NOT SUPPORTED"),405
 
-# GLOBAL STATISTICS
-@app.route('/datavengers/most/rack', methods = ['POST']) # Top 10 warehouses with the most racks
+# GLOBAL STATISTICS - Los globales se cambian a GET 
+@app.route('/datavengers/most/rack', methods = ['GET']) # Top 10 warehouses with the most racks
 def getTop10WarehousesMostRacks():
      return WarehouseHandler().getTop10WarehousesMostRacks() 
 
-@app.route('/datavengers/most/incoming', methods = ['POST']) # Top 5 warehouses with the most incoming transactions
+@app.route('/datavengers/most/incoming', methods = ['GET']) # Top 5 warehouses with the most incoming transactions
 def getTop5WarehousesMostIncomings():
      return WarehouseHandler().getTop5WarehousesMostIncomings()
 
-@app.route('/datavengers/most/deliver', methods = ['POST']) # Top 5 warehouses that delivers the most exchanges
+@app.route('/datavengers/most/deliver', methods = ['GET']) # Top 5 warehouses that delivers the most exchanges
 def getTop5WarehousesThatDeliverMostExchanges():
      return WarehouseHandler().getTop5WarehousesThatDeliverMostExchanges()
 
-@app.route('/datavengers/most/transactions', methods = ['POST']) # Top 3 users that made the most transactions
+@app.route('/datavengers/most/transactions', methods = ['GET']) # Top 3 users that made the most transactions
 def getTop3UsersMostTransactions():
     return UserHandler().getTop3UsersMostTransactions()
 
-@app.route('/datavengers/least/outgoing', methods = ['POST']) # Top 3 warehouses with the least outgoing transactions
+@app.route('/datavengers/least/outgoing', methods = ['GET']) # Top 3 warehouses with the least outgoing transactions
 def getTop3WarehousesLeastOutgoings():
     return WarehouseHandler().getTop3WarehousesLeastOutgoings()
 
-@app.route('/datavengers/most/city', methods = ['POST']) # Top 3 warehouses’ cities with the most transactions
+@app.route('/datavengers/most/city', methods = ['GET']) # Top 3 warehouses’ cities with the most transactions
 def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 

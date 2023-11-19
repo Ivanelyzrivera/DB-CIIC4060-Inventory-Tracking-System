@@ -32,7 +32,7 @@ class RackHandler:
         dao = RackDAO()
         result = dao.getracksID(rid)
         if result:
-            return jsonify(result) #self.mapToDict(result
+            return jsonify(result)
         else:
             return jsonify("Not found"), 404
 
