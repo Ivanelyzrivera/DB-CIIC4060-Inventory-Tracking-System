@@ -54,7 +54,7 @@ class WarehouseDAO:
         self.conn.commit()
         return count
         
-    def putById(self,wid,name,address,city, price):
+    def putById(self,wid,name,address,city):
         cursor = self.conn.cursor()
         query = "update warehouse set W_Name = %s, W_Address =%s, W_City =%s where w_id = %s;"
         cursor.execute(query, (name, address, city, wid,))
