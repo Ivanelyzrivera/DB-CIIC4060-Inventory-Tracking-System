@@ -285,7 +285,7 @@ def warehouseRackLowStock(wid, uid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/material/<int:uid>', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
+@app.route('/datavengers/warehouse/<int:wid>/rack/material/', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
 def warehouseBottom3(wid, uid):
     data = request.json
     uid = UserHandler().getUserID(data)
