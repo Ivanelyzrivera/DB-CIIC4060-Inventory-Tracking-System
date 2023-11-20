@@ -28,7 +28,7 @@ class OutgoingDAO:
 
     def getoutgoingbyID(self,oid):
         cursor = self.conn.cursor()
-        query = "SELECT O_ID, O_SellPrice, O_Customer, O_Destination, T_ID FROM Outgoing where o_id=%s"
+        query = "SELECT O_ID, O_SellPrice, O_Customer, O_Destination, T_ID FROM Outgoing NATURAL INNER JOIN Transaction where t_id=%s"
         try:
             cursor.execute(query, (oid,))
             result = cursor.fetchone()
