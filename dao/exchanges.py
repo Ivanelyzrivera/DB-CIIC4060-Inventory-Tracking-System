@@ -55,7 +55,7 @@ class ExchangeDAO:
     
     def putByID(self,eid ,reason,warehouseIDdestination,userIDdestination,transactionID):
         cursor = self.conn.cursor()
-        query = "update part set E_Reason = %s, W_ID_Destination =%s, U_ID_Destination = %s, T_ID = %s where e_id = %s;"
+        query = "update exchange set E_Reason = %s, W_ID_Destination =%s, U_ID_Destination = %s, T_ID = %s where E_ID =%s;"
         cursor.execute(query, (reason,warehouseIDdestination,userIDdestination,transactionID, eid,))
         count = cursor.rowcount
         self.conn.commit()
