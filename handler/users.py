@@ -112,5 +112,5 @@ class UserHandler:
         return warehouseAssociation is not None
     
     def getUserID(self,data):
-        uid = data['U_ID']
+        uid = data['user_id']
         return uid
