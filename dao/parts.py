@@ -55,7 +55,7 @@ class PartDAO:
         self.conn.commit()
         return count
         
-    def putById(self,pid ,type,color,weight,name,price,manufacturer,supplierID):
+    def putByID(self,pid ,type,color,weight,name,price,manufacturer,supplierID):
         cursor = self.conn.cursor()
         query = "update part set P_Type = %s, P_Color =%s, P_Weight = %s, P_Name = %s ,P_Price = %s,P_Manufacturer = %s,S_ID = %s where p_id = %s;"
         cursor.execute(query, (type, color, weight, name, price, manufacturer, supplierID, pid,))

@@ -54,14 +54,14 @@ class OutgoingHandler:
 		else:
 			return jsonify("Not found"), 404
 		
-	def putById(self,oid ,data):
+	def putByID(self,oid ,data):
 		sellprice = data['O_SellPrice']
 		customer = data['O_Customer']
 		destination = data['O_Destination']
 		transactionID = data['T_ID']
 		if oid and sellprice and customer and destination and transactionID:
 			dao = OutgoingDAO()
-			flag = dao.putById(oid,sellprice,customer,destination,transactionID)
+			flag = dao.putByID(oid,sellprice,customer,destination,transactionID)
 			if flag:
 				return jsonify(data),201
 			else:

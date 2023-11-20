@@ -53,7 +53,7 @@ class UserDAO:
         self.conn.commit()
         return count
     
-    def putById(self,uid ,firstName,lastName,email,password,salary,hireDate,position,warehouseID):
+    def putByID(self,uid ,firstName,lastName,email,password,salary,hireDate,position,warehouseID):
         cursor = self.conn.cursor()
         query = "update users set U_FirstName = %s, U_LastName =%s, U_Email = %s, U_Password = %s ,U_Salary = %s,U_HireDate = %s,U_Position = %s,W_ID = %s where u_id = %s;"
         cursor.execute(query, (firstName,lastName,email,password,salary,hireDate,position,warehouseID, uid,))

@@ -56,14 +56,14 @@ class ExchangeHandler:
         else:
             return jsonify("Not found"), 404
     
-    def putById(self,eid ,data):
+    def putByID(self,eid ,data):
         reason = data['E_Reason']
         warehouseIDdestination = data['W_ID_Destination']
         userIDdestination = data['U_ID_Destination']
         transactionID = data['T_ID']
         if eid and reason and warehouseIDdestination and userIDdestination and transactionID:
             dao = ExchangeDAO()
-            flag = dao.putById(eid,reason,warehouseIDdestination,userIDdestination,transactionID)
+            flag = dao.putByID(eid,reason,warehouseIDdestination,userIDdestination,transactionID)
             if flag:
                 return jsonify(data),201
             else:

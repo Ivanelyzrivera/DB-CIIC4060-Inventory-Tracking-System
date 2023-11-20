@@ -54,7 +54,7 @@ class RackDAO:
         self.conn.commit()
         return count
         
-    def putById(self,rid ,capacity, stock, warehouseID, partID):
+    def putByID(self,rid ,capacity, stock, warehouseID, partID):
         cursor = self.conn.cursor()
         query = "update rack set R_Capacity = %s, R_Stock = %s, W_ID = %s, P_ID = %s where r_id = %s;"
         cursor.execute(query, (capacity, stock, warehouseID, partID, rid,))

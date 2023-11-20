@@ -58,14 +58,14 @@ class RackHandler:
         else:
             return jsonify("Not found"), 404
 
-    def putById(self,rid,data):
+    def putByID(self,rid,data):
         capacity = data['R_Capacity']
         stock = data['R_Stock']
         warehouseID = data['W_ID']
         partID = data['P_ID']
         if rid and capacity and stock and warehouseID and partID:
             dao = RackDAO()
-            flag = dao.putById(rid,capacity, stock, warehouseID, partID)
+            flag = dao.putByID(rid,capacity, stock, warehouseID, partID)
             if flag:
                 return jsonify(data),201
             else:
