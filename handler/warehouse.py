@@ -188,7 +188,7 @@ class WarehouseHandler:
             return jsonify({'error': 'An error occurred while retrieving low stock racks'}), 400
         
         
-    def warehouseBottom3(self,wid):
+    def warehouseBottom3(self, wid):
         dao = WarehouseDAO()
         try:
             dbtuples = dao.warehouseBottom3(wid)
