@@ -243,7 +243,7 @@ ORDER BY ay.T_Year;
             LIMIT 3;
         """
         try:
-            cursor.execute(query,(wid,))
+            cursor.execute(query,(wid, ))
             result = cursor.fetchall()
             return result
         except Exception as e:
