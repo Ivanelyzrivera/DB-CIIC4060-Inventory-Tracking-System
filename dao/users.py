@@ -64,9 +64,9 @@ class UserDAO:
     def getTop3UsersMostTransactions(self):
         cursor = self.conn.cursor()
         query = """
-            select U_ID, count(t_id) as transaction_count
-            from transaction
-            group by U_ID
+            select U_ID, U_FirstName, U_LastName, count(t_id) as transaction_count
+            from transaction natural inner join users
+            group by U_ID, U_FirstName, U_LastName
             order by count(t_id) desc
             limit 3
         """
