@@ -53,3 +53,17 @@ class IncomingHandler:
             return jsonify("Delete was Succesful"),200
         else:
             return jsonify("Not found"), 404
+
+    def putByID(self,iid ,data):
+		rackID = data['R_ID']
+		supplierID = data['S_ID']
+		transactionID = data['T_ID']
+		if iid and rackID and supplierID and transactionID:
+			dao = IncomingDAO()
+			flag = dao.putByID(iid,rackID,supplierID,transactionID)
+			if flag:
+				return jsonify(data),201
+			else:
+				return jsonify ("Not Found"),400
+		else:
+			return jsonify("Bad Data or Unexpected attribute values, "), 400
