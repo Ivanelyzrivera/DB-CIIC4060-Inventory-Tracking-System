@@ -269,44 +269,58 @@ def getTop3WarehouseCitiesMostTransactions():
     return WarehouseHandler().getTop3WarehouseCitiesMostTransactions()
 
 # LOCAL STATISTICS
-@app.route('/datavengers/profit/<int:wid>/year/<int:uid>', methods = ['POST'])
-def getProfitByYear(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+@app.route('/datavengers/warehouse/<int:wid>/profit', methods = ['POST'])
+def getProfitByYear(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().getProfitByYear(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock/<int:uid>',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
+@app.route('/datavengers/warehouse/<int:wid>/rack/lowstock',methods = ['POST']) #Top 5 racks with quantity under the 25% capacity threshold
 def warehouseRackLowStock(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseRackLowStock(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/material/<int:uid>', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
+@app.route('/datavengers/warehouse/<int:wid>/rack/material', methods = ['POST']) # Bottom 3 part’s type/material in the warehouse
 def warehouseBottom3(wid, uid):
-    if not WarehouseHandler().validateUserWarehouse(uid, wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
+    if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return WarehouseHandler().warehouseBottom3(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/rack/expensive/<int:uid>', methods = ['POST']) #Top 5 most expensive racks in the warehouse
-def get5MostExpensiveRacks(wid, uid):
+@app.route('/datavengers/warehouse/<int:wid>/rack/expensive', methods = ['POST']) #Top 5 most expensive racks in the warehouse
+def get5MostExpensiveRacks(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
     if not RackHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return RackHandler().get5MostExpensiveRacks(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/transaction/suppliers/<int:uid>', methods = ['POST']) #Top 3 supplier that supplied to the warehouse
-def getTop3SuppliersPerWarehouse(wid, uid):
+@app.route('/datavengers/warehouse/<int:wid>/transaction/suppliers', methods = ['POST']) #Top 3 supplier that supplied to the warehouse
+def getTop3SuppliersPerWarehouse(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
     if not SupplierHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return SupplierHandler().getTop3SuppliersPerWarehouse(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/users/receivesmost/<int:uid>', methods = ['POST']) # Top 3 users that receives the most exchanges
-def get3UsersMostExchanges(wid, uid):
+@app.route('/datavengers/warehouse/<int:wid>/users/receivesmost', methods = ['POST']) # Top 3 users that receives the most exchanges
+def get3UsersMostExchanges(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
     if not UserHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return UserHandler().get3UsersMostExchanges(wid)
 
-@app.route('/datavengers/warehouse/<int:wid>/transaction/leastcost/<int:uid>', methods = ['POST']) # Top 3 days with the smallest incoming transactions’ cost
-def gettop3DaysSmallestIncoming(wid, uid):
+@app.route('/datavengers/warehouse/<int:wid>/transaction/leastcost', methods = ['POST']) # Top 3 days with the smallest incoming transactions’ cost
+def gettop3DaysSmallestIncoming(wid):
+    data = request.json
+    uid = UserHandler().getUserID(data)
     if not TransactionHandler().validateUserWarehouse(uid, wid):
         return jsonify({"error": "Unauthorized access"})
     return TransactionHandler().top3DaysSmallestIncoming(wid)

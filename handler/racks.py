@@ -44,7 +44,7 @@ class RackHandler:
         if capacity and stock and warehouseID and partID:
             dao = RackDAO()
             rid = dao.insertRacks(capacity, stock, warehouseID, partID)
-            data['W_ID'] = rid
+            data['R_ID'] = rid
             return jsonify(data),201
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400

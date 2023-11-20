@@ -110,3 +110,7 @@ class UserHandler:
         dao = UserDAO()
         warehouseAssociation = dao.validateWarehouseAssociation(uid, wid)
         return warehouseAssociation is not None
+    
+    def getUserID(self,data):
+        uid = data['U_ID']
+        return uid
