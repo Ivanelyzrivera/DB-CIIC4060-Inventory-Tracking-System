@@ -62,7 +62,7 @@ class PartHandler:
         else:
             return jsonify("Not found"), 404
 
-    def putById(self,pid ,data):
+    def putByID(self,pid ,data):
         type = data['P_Type']
         color = data['P_Color']
         weight = data['P_Weight']
@@ -72,7 +72,7 @@ class PartHandler:
         supplierID = data['S_ID']
         if pid and type and color and weight and name and price and manufacturer and supplierID:
             dao = PartDAO()
-            flag = dao.putById(pid,type,color,weight,name,price,manufacturer,supplierID)
+            flag = dao.putByID(pid,type,color,weight,name,price,manufacturer,supplierID)
             if flag:
                 return jsonify(data),201
             else:

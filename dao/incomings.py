@@ -53,7 +53,7 @@ class IncomingDAO:
         self.conn.commit()
         return count
     
-    def putById(self,iid ,rackID,supplierID,transactionID):
+    def putByID(self,iid ,rackID,supplierID,transactionID):
         cursor = self.conn.cursor()
         query = "update incoming set R_ID = %s, S_ID =%s, T_ID = %s where i_id = %s;"
         cursor.execute(query, (rackID,supplierID,transactionID, iid,))

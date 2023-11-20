@@ -45,9 +45,9 @@ class TransactionDAO:
         self.conn.commit()
         return T_ID
 
-    def putById(self,tid ,date,year,quantity,partsID,warehouseID,userID):
+    def putByID(self,tid ,date,year,quantity,partsID,warehouseID,userID):
         cursor = self.conn.cursor()
-        query = "update transaction set T_Date = %s, T_Year =%s, T_Quantity =%s,  P_ID = %s, W_ID = %s ,U_ID = %s;"
+        query = "update transaction set T_Date = %s, T_Year =%s, T_Quantity =%s,  P_ID = %s, W_ID = %s ,U_ID = %s where T_ID =%s;"
         cursor.execute(query, (date,year,quantity,partsID,warehouseID,userID,tid))
         count = cursor.rowcount
         self.conn.commit()

@@ -53,7 +53,7 @@ class ExchangeDAO:
         self.conn.commit()
         return count
     
-    def putById(self,eid ,reason,warehouseIDdestination,userIDdestination,transactionID):
+    def putByID(self,eid ,reason,warehouseIDdestination,userIDdestination,transactionID):
         cursor = self.conn.cursor()
         query = "update part set E_Reason = %s, W_ID_Destination =%s, U_ID_Destination = %s, T_ID = %s where e_id = %s;"
         cursor.execute(query, (reason,warehouseIDdestination,userIDdestination,transactionID, eid,))

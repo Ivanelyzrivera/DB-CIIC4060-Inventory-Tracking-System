@@ -54,7 +54,7 @@ class OutgoingDAO:
         self.conn.commit()
         return count
     
-    def putById(self,oid,sellprice,customer,destination,transactionID):
+    def putByID(self,oid,sellprice,customer,destination,transactionID):
         cursor = self.conn.cursor()
         query = "update outgoing set O_SellPrice = %s, O_Customer = %s, O_Destination = %s, T_ID = %s where o_id = %s;"
         cursor.execute(query, (sellprice,customer,destination,transactionID, oid))

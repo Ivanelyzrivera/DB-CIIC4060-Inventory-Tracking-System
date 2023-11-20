@@ -59,7 +59,7 @@ class TransactionHandler:
 		userID = data['U_ID']
 		if tid and date and year and quantity and partsID and warehouseID and userID:
 			dao = TransactionDAO()
-			flag = dao.putById(tid,date,year,quantity,partsID,warehouseID,userID)
+			flag = dao.putByID(tid,date,year,quantity,partsID,warehouseID,userID)
 			if flag:
 				return jsonify(data),201
 			else:

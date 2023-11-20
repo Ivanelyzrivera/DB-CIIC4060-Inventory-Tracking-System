@@ -58,7 +58,7 @@ class SupplierHandler:
         else:
             return jsonify("Not found"), 404
 
-    def putById(self,sid ,data):
+    def putByID(self,sid ,data):
         name = data['S_Name']
         address = data['S_Address']
         email = data['S_Email']
@@ -66,7 +66,7 @@ class SupplierHandler:
         city = data['S_City']
         if sid and name and address and email and phoneNumber and city:
             dao = SupplierDAO()
-            flag = dao.putById(sid,name,address,email,phoneNumber,city)
+            flag = dao.putByID(sid,name,address,email,phoneNumber,city)
             if flag:
                 return jsonify(data),201
             else:

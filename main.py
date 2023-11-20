@@ -39,7 +39,7 @@ def getpartbyID(pid):
          return PartHandler().deleteById(pid)
     elif request.method == 'PUT':
          data = request.json
-         return PartHandler().putById(pid,data)
+         return PartHandler().putByID(pid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
     
@@ -79,7 +79,7 @@ def getsupplierbyID(sid):
          return SupplierHandler().deleteById(sid)
     elif request.method == 'PUT':
          data = request.json
-         return SupplierHandler().putById(sid,data)
+         return SupplierHandler().putByID(sid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -103,7 +103,7 @@ def getwarehousebyID(wid):
          return WarehouseHandler().deleteById(wid)
     elif request.method == 'PUT':
          data = request.json
-         return WarehouseHandler().putById(wid,data)
+         return WarehouseHandler().putByID(wid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
     
@@ -130,7 +130,7 @@ def getracksID(rid):
          return RackHandler().deleteById(rid)
     elif request.method == 'PUT':
          data = request.json
-         return RackHandler().putById(rid,data)
+         return RackHandler().putByID(rid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -153,7 +153,7 @@ def getuserbyID(uid):
          return UserHandler().deleteById(uid)
     elif request.method == 'PUT':
          data = request.json
-         return UserHandler().putById(uid,data)
+         return UserHandler().putByID(uid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -173,7 +173,7 @@ def getTransactionByID(tid):
          return TransactionHandler().getTransactionByID(tid)
     elif request.method == 'PUT':
          data = request.json
-         return TransactionHandler().putById(tid,data)
+         return TransactionHandler().putByID(tid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -195,7 +195,7 @@ def getoutgoingbyID(oid):
          return OutgoingHandler().deleteById(oid)
     elif request.method == 'PUT':
          data = request.json
-         return OutgoingHandler().putById(oid,data)
+         return OutgoingHandler().putByID(oid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -217,7 +217,7 @@ def getincomingbyID(iid):
          return IncomingHandler().deleteById(iid)
     elif request.method == 'PUT':
          data = request.json
-         return IncomingHandler().putById(iid,data)
+         return IncomingHandler().putByID(iid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 
@@ -239,7 +239,7 @@ def getexchangebyID(eid):
          return ExchangeHandler().deleteById(eid)
     elif request.method == 'PUT':
          data = request.json
-         return ExchangeHandler().putById(eid,data)
+         return ExchangeHandler().putByID(eid,data)
     else:
          return jsonify("NOT SUPPORTED"),405
 

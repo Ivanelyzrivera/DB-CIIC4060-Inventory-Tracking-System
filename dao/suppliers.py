@@ -53,7 +53,7 @@ class SupplierDAO:
         self.conn.commit()
         return count
 
-    def putById(self,sid ,name,address,email,phoneNumber,city):
+    def putByID(self,sid ,name,address,email,phoneNumber,city):
         cursor = self.conn.cursor()
         query = "update supplier set S_Name = %s, S_Address =%s, S_Email = %s, S_PhoneNumber = %s ,S_City = %s where s_id = %s;"
         cursor.execute(query, (name,address,email,phoneNumber,city, sid,))

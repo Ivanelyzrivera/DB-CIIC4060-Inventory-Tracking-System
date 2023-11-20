@@ -63,7 +63,7 @@ class UserHandler:
         else:
             return jsonify("Not found"), 404
 
-    def putById(self,uid ,data):
+    def putByID(self,uid ,data):
         firstName = data['U_FirstName']
         lastName = data['U_LastName']
         email = data['U_Email']
@@ -74,7 +74,7 @@ class UserHandler:
         warehouseID = data['W_ID']
         if uid and firstName and lastName and email and password and salary and hireDate and position and warehouseID:
             dao = UserDAO()
-            flag = dao.putById(uid,firstName,lastName,email,password,salary,hireDate,position,warehouseID)
+            flag = dao.putByID(uid,firstName,lastName,email,password,salary,hireDate,position,warehouseID)
             if flag:
                 return jsonify(data),201
             else:

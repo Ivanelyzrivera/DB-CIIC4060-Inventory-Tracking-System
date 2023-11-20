@@ -55,13 +55,13 @@ class WarehouseHandler:
         else:
             return jsonify("Not found"), 404
 
-    def putById(self,wid ,data):
+    def putByID(self,wid ,data):
         name = data['W_Name']
         address = data['W_Address']
         city = data['W_City']
         if wid and name and address and city:
             dao = WarehouseDAO()
-            flag = dao.putById(wid, name,address,city)
+            flag = dao.putByID(wid, name,address,city)
             if flag:
                 return jsonify(data),201
             else:
