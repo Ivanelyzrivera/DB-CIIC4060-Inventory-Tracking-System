@@ -7,7 +7,7 @@ class TransactionHandler:
 		result = {}
 		result['T_ID'] = t[0]
 		result['T_Date'] = t[1]
-  		result['T_Year'] = t[2]
+		result['T_Year'] = t[2]
 		result['T_Quantity'] = t[3]
 		result['P_ID'] = t[4]
 		result['W_ID'] = t[5]
@@ -36,8 +36,8 @@ class TransactionHandler:
 
 	def insertTransaction(self, data):
 		date = data['T_Date']
-  		year = data['T_Year']
-  		quantity = data['T_Quantity']
+		year = data['T_Year']
+		quantity = data['T_Quantity']
 		partsID = data['P_ID']
 		warehouseID = data['W_ID']
 		userID = data['U_ID']
@@ -52,7 +52,7 @@ class TransactionHandler:
 		
 	def putByID(self, tid, data):
 		date = data['T_Date']
-  		year = data['T_Year']
+		year = data['T_Year']
 		quantity = data['T_Quantity']
 		partsID = data['P_ID']
 		warehouseID = data['W_ID']
