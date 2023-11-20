@@ -66,7 +66,7 @@ class UserDAO:
         query = """
             select U_ID, U_FirstName, U_LastName, count(t_id) as transaction_count
             from transaction natural inner join users
-            group by U_ID
+            group by U_ID, U_FirstName, U_LastName
             order by count(t_id) desc
             limit 3
         """
