@@ -65,7 +65,7 @@ class UserDAO:
         cursor = self.conn.cursor()
         query = """
             select U_ID, U_FirstName, U_LastName, count(t_id) as transaction_count
-            from transaction
+            from transaction natural inner join users
             group by U_ID
             order by count(t_id) desc
             limit 3
