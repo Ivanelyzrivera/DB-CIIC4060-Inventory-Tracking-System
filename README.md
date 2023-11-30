@@ -11,22 +11,22 @@
 **Heroku Database Credentials**
 
 **Host:** 
-ec2-3-210-173-88.compute-1.amazonaws.com
+ec2-107-22-101-0.compute-1.amazonaws.com
 
 **Database:** 
-d3tmtkrcp8aqj
+ddi6u4bd9jt764
 
 **User:** 
-zwemdsohihiqcl
+ovyyzbvclcabgy
 
 **Port:** 
 5432
 
 **Password:** 
-83d0527775b3411c847bc2a9165fa09a7e227dab89478715ebdaf6cb1931c508
+02a04b02be1473158c652e275c09b248131e9c431a32c187235adf1d75efb5cd
 
 **URI:** 
-postgres://zwemdsohihiqcl:83d0527775b3411c847bc2a9165fa09a7e227dab89478715ebdaf6cb1931c508@ec2-3-210-173-88.compute-1.amazonaws.com:5432/d3tmtkrcp8aqj
+postgres://ovyyzbvclcabgy:02a04b02be1473158c652e275c09b248131e9c431a32c187235adf1d75efb5cd@ec2-107-22-101-0.compute-1.amazonaws.com:5432/ddi6u4bd9jt764
 
 **Heroku CLI:** 
 heroku pg:psql postgresql-animate-69302 --app datavenge
