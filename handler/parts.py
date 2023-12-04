@@ -98,11 +98,11 @@ class PartHandler:
         except Exception as e:
             return jsonify("Not found"), 400
         
-    def getAllPartsInWarehouse(self):
+    def getAllPartsInWarehouse(self, wid):
         dao = PartDAO()
         try:
-            part_prices = dao.getAllPartsInWarehouse()
-            return jsonify(part_prices)
+            result = dao.getAllPartsInWarehouse(wid)
+            return jsonify(result)
         except Exception as e:
             return jsonify("Not found"), 400    
         

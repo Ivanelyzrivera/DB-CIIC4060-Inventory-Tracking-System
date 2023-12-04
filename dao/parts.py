@@ -3,7 +3,7 @@ import psycopg2
 
 class PartDAO:
     def __init__(self):
-        connection_url = "host = localhost dbname =%s user=%s password=%s" % (pg_config['dbname'],
+        connection_url = "host = ec2-107-22-101-0.compute-1.amazonaws.com dbname =%s user=%s password=%s" % (pg_config['dbname'],
          pg_config['user'],
          pg_config['password'])
         print("Connection URL: " + connection_url)
@@ -77,7 +77,7 @@ class PartDAO:
 
     def getAllPriceOfParts(self):
         cursor = self.conn.cursor()
-        query = "SELECT P_Price FROM Part"
+        query = "SELECT P_Price, P_Name, P_ID FROM Part"
         try:
             cursor.execute(query)
             result = [row[0] for row in cursor.fetchall()]  # Extract the first column value (P_Price)
@@ -87,15 +87,15 @@ class PartDAO:
         finally:
             cursor.close()
               
-    def getAllPartsInWarehouse(self):
+    def getAllPartsInWarehouse(self, wid):
         cursor = self.conn.cursor()
         query = """
         SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID 
         FROM Part natural inner join warehouse natural inner join rack
-        WHERE W_ID = 1 AND  rack.w_id = warehouse.w_id AND rack.p_id = part.p_id
+        WHERE W_ID = %s AND  rack.w_id = warehouse.w_id AND rack.p_id = part.p_id
         """
         try:
-            cursor.execute(query)
+            cursor.execute(query, (wid,))
             result = [row[0] for row in cursor.fetchall()] 
             return result
         except Exception as e:
