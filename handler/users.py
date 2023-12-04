@@ -88,7 +88,13 @@ class UserHandler:
             dbtuples = dao.getTop3UsersMostTransactions()
             result =[]
             for e in dbtuples:
-                result.append(e)
+                user_info = {
+                    'user_ID': e[0],
+                    'user_FirstName':e[1],
+                    'user_LastName': e[2],
+                    'Transaction_Count' :e[3]
+                }
+                result.append(user_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all users: {e}")
@@ -100,7 +106,12 @@ class UserHandler:
             dbtuples = dao.get3UsersMostExchanges(wid)
             result = []
             for e in dbtuples:
-                result.append(e)
+                user_info = {
+                    'userID' : e[0],
+                    'ExchangeCount' : e[1]
+
+                }
+                result.append(user_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all users: {e}")
