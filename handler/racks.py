@@ -88,7 +88,11 @@ class RackHandler:
             dbtuples = dao.get5MostExpensiveRacks(wid)
             result = []
             for e in dbtuples:
-                result.append(e)
+                rack_info = {
+                    'RackID': e[0],
+                    'TotalProfit' : e[1]
+                }
+                result.append(rack_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all racks: {e}")

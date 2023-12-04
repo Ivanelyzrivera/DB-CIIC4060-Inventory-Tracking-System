@@ -10,6 +10,18 @@ class WarehouseHandler:
         result['W_Address'] = t[2]
         result['W_City'] = t[3]
         return result
+    
+    def mapToDictPart(self,t):
+        result = {}
+        result['P_ID'] = t[0]
+        result['P_Type'] = t[1]
+        result['P_Color'] = t[2]
+        result['P_Weight'] = t[3]
+        result['P_Name'] = t[4]
+        result['P_Price'] = t[5]
+        result['P_Manufacturer'] = t[6]
+        result['S_ID'] = t[7]
+        return result
 
 
     def getAllWarehouses(self):
@@ -111,7 +123,11 @@ class WarehouseHandler:
             dbtuples = dao.getTop3WarehouseCitiesMostTransactions()
             result =[]
             for e in dbtuples:
-                result.append(e)
+                warehouse_info = {
+                    'W_City' : e[0],
+                    'W_TransactionCount': e[1]
+                }
+                result.append(warehouse_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
@@ -123,7 +139,11 @@ class WarehouseHandler:
             dbtuples = dao.getTop3WarehousesLeastOutgoings()
             result = []
             for e in dbtuples:
-                result.append(e)
+                warehouse_info = {
+                    'W_ID' : e[0],
+                    'Outgoing_Transaction_Count' : e[1]
+                }
+                result.append(warehouse_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
@@ -194,7 +214,7 @@ class WarehouseHandler:
             dbtuples = dao.warehouseBottom3(wid)
             result =[]
             for e in dbtuples:
-                result.append(e)
+                result.append(self.mapToDictPart(e))
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting bottom 3 type/material from the warehouses: {e}")

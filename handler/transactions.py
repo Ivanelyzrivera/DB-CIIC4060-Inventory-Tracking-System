@@ -73,7 +73,12 @@ class TransactionHandler:
 			dbtuples = dao.top3DaysSmallestIncoming(wid)
 			result = []
 			for e in dbtuples:
-				result.append(e)
+				warehouse_info ={
+					'T_Date' : e[0],
+					'T_Year' : e[1],
+					'Total_Daily_Cost': e[2]
+				}
+				result.append(warehouse_info)
 			return jsonify(result)
 		except Exception as e:
 			print(f"An error occurred while getting all transactions: {e}")
