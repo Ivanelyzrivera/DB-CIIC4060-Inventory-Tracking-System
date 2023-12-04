@@ -50,6 +50,10 @@ def getpricebyID(pid):
 @app.route('/datavengers/parts/allprice', methods = ['GET'])
 def getAllPriceOfParts():
      return PartHandler().getAllPriceOfParts()
+ 
+@app.route('/datavengers/parts/allpartsinwarehouse', methods = ['GET'])
+def getAllPartsInWarehouse():
+     return PartHandler().getAllPartsInWarehouse()
 
 @app.route('/datavengers/parts/supplier/<int:sid>', methods = ['GET'])
 def partsSupliedBySupplier(sid):
