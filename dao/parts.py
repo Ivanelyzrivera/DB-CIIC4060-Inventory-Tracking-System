@@ -77,10 +77,13 @@ class PartDAO:
 
     def getAllPriceOfParts(self):
         cursor = self.conn.cursor()
-        query = "SELECT P_Price, P_Name, P_ID FROM Part"
+        query = "SELECT P_ID, P_Name, P_Price FROM Part"
         try:
             cursor.execute(query)
-            result = [row[0] for row in cursor.fetchall()]  # Extract the first column value (P_Price)
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
             return result
         except Exception as e:
             print("An error occurred: ", e)
