@@ -96,7 +96,7 @@ class PartDAO:
         """
         try:
             cursor.execute(query, (wid,))
-            result = [row[0] for row in cursor.fetchall()] 
+            result = cursor.fetchall()
             return result
         except Exception as e:
             print("An error occurred: ", e)

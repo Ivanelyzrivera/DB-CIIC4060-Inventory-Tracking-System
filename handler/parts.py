@@ -100,11 +100,12 @@ class PartHandler:
         
     def getAllPartsInWarehouse(self, wid):
         dao = PartDAO()
-        try:
-            result = dao.getAllPartsInWarehouse(wid)
-            return jsonify(result)
-        except Exception as e:
-            return jsonify("Not found"), 400    
+        result = dao.getAllPartsInWarehouse(wid)
+        if result:
+            parts_list = [self.mapToDict(part) for part in result]
+            return jsonify(parts_list)
+        else:
+            return jsonify("Not found"), 404
         
     def partsSupliedBySupplier(self, sid):
         dao = PartDAO()
