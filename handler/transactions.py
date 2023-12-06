@@ -83,6 +83,30 @@ class TransactionHandler:
 		except Exception as e:
 			print(f"An error occurred while getting all transactions: {e}")
 			return jsonify ({'error': 'An error occurred while retrieving transactions'}), 500
+		
+	def getAllTransactionsInAWarehouse(self,wid):
+		dao = TransactionDAO()
+		try:
+			dbtuples = dao.getAllTransactionsInAWarehouse(wid)
+			result = []
+			for e in dbtuples:
+				warehouse_info ={
+					'T_ID' : e[0],
+					'T_Date': e[1],
+					'T_Year': e[2],
+					'T_Quantity': e[3],
+					'P_ID': e[4],
+					'W_ID': e[5],
+					'U_ID': e[6]
+				}
+				result.append(warehouse_info)
+			return jsonify(result)
+		except Exception as e:
+			print(f"An error occurred while getting all transactions: {e}")
+			return jsonify ({'error': 'An error occurred while retrieving transactions'}), 500
+
+
+	
 
 	def validateUserWarehouse(self, uid, wid):
 		dao = TransactionDAO()
