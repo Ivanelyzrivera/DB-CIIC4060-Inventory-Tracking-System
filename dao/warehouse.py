@@ -127,10 +127,8 @@ class WarehouseDAO:
         """
         try:
             cursor.execute(query)
-            result = []
-            for row in cursor:
-                result.append(row)
-            cursor.close()
+            result = cursor.fetchall()
+            return result
         except Exception as e:
             print("An error occurred: ", e)
         finally:

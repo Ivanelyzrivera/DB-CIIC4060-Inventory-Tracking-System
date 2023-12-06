@@ -114,7 +114,10 @@ def getwarehousebyID(wid):
 
 @app.route('/datavengers/warehouses/parttypebywarehouse',methods = ['GET']) 
 def partTypeByWarehouse():
-    return WarehouseHandler().partTypeByWarehouse()
+    if request.method == 'GET':
+        return WarehouseHandler().partTypeByWarehouse()
+    else:
+         return jsonify("NOT SUPPORTED"),405
 
 @app.route('/datavengers/racks',methods=['GET', 'POST'])
 def getAllRacks():
@@ -174,7 +177,7 @@ def getAllTransactions():
 @app.route('/datavengers/transactions/warehouse/<int:wid>',methods = ['GET'])
 def getAllTransactionsInAWarehouse(wid):
     if request.method == 'GET':
-        return TransactionHandler().getAllTransactionsInAWarehouse()
+        return TransactionHandler().getAllTransactionsInAWarehouse(wid)
     else:
         return jsonify("NOT SUPPORTED"),405
 
