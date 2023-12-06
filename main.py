@@ -170,6 +170,13 @@ def getAllTransactions():
         return TransactionHandler().insertTransaction(data)
     else:
         return jsonify("NOT SUPPORTED"),405
+    
+@app.route('/datavengers/transactions/warehouse/<int:wid>',methods = ['GET'])
+def getAllTransactionsInAWarehouse(wid):
+    if request.method == 'GET':
+        return TransactionHandler().getAllTransactionsInAWarehouse()
+    else:
+        return jsonify("NOT SUPPORTED"),405
 
 @app.route('/datavengers/transactions/<int:tid>',methods = ['GET','PUT'])
 def getTransactionByID(tid):

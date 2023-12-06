@@ -83,3 +83,20 @@ class TransactionDAO:
         result = cursor.fetchone()
         cursor.close()
         return result
+    
+    def getAllTransactionsInAWarehouse(self,wid):
+        cursor = self.conn.cursor()
+        query = """
+            SELECT t_id,t_date,t_year,t_quantity,p_id,w_id,u_id
+            FROM Transaction
+            WHERE W_ID = %s
+            ORDER BY T_Year DESC, TO_DATE(T_Date, 'MM-DD') DESC;
+    """
+        try:
+            cursor.execute(query, (wid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
