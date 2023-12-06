@@ -181,7 +181,12 @@ class WarehouseHandler:
             dbtuples = dao.partTypeByWarehouse()
             result =[]
             for e in dbtuples:
-                result.append(e)
+                info = {
+                    'W_ID' : e[0],
+                    'P_Type': e[1],
+                    'Stock': e[2]
+                }
+                result.append(info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting all warehouses: {e}")
