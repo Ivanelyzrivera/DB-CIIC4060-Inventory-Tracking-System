@@ -174,7 +174,7 @@ def getAllTransactions():
 @app.route('/datavengers/transactions/warehouse/<int:wid>',methods = ['GET'])
 def getAllTransactionsInAWarehouse(wid):
     if request.method == 'GET':
-        return TransactionHandler().getAllTransactionsInAWarehouse()
+        return TransactionHandler().getAllTransactionsInAWarehouse(wid)
     else:
         return jsonify("NOT SUPPORTED"),405
 
