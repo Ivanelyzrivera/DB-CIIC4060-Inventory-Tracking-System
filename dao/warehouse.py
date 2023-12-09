@@ -235,9 +235,9 @@ ORDER BY ay.T_Year;
     def warehouseBottom3(self,wid): # Bottom 3 part’s type/material in the warehouse
         cursor = self.conn.cursor()
         query = """
-            SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID
-            FROM Part natural INNER JOIN rack natural inner join warehouse
-            ORDER BY P_Type ASC
+            SELECT P_Type, COUNT(P_Type) AS TotalCount
+            FROM Part NATURAL INNER JOIN Rack NATURAL INNER JOIN Warehouse
+            GROUP BY P_Type
             LIMIT 3;
         """
         try:
