@@ -76,20 +76,20 @@ class SupplierHandler:
         
     def getTop3SuppliersPerWarehouse(self,wid):
         dao = SupplierDAO()
-        try:
-            dbtuples = dao.getTop3SuppliersPerWarehouse(wid)
+        dbtuples = dao.getTop3SuppliersPerWarehouse(wid)
+        if dbtuples:
+            
             result = []
             for e in dbtuples:
-                supplier_info = {
-                    'Supplier_ID' : e[0],
-                    'S_Name': e[1],
-                    'W_ID' : e[2]
-                }
-                result.append(supplier_info)
+                result.append({
+                    's_id' : e[0],
+                    's_name': e[1],
+                    'transaction_count' : e[2]
+                })
+            print(result)
             return jsonify(result)
-        except Exception as e:
-            print(f"An error occurred while getting all warehouses: {e}")
-            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+        else:
+            return jsonify("Not found"), 404
         
     def validateUserWarehouse(self, uid, wid):
         dao = SupplierDAO()
