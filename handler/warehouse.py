@@ -122,15 +122,21 @@ class WarehouseHandler:
         
     def getTop5WarehousesThatDeliverMostExchanges(self):
         dao = WarehouseDAO()
-        try:
-            dbtuples = dao.getTop5WarehousesThatDeliverMostExchanges()
-            result =[]
-            for e in dbtuples:
-                result.append(self.mapToDict(e))
+        dbtuples = dao.getTop5WarehousesThatDeliverMostExchanges()
+        if dbtuples:
+            result = []
+            for row in dbtuples:
+                result.append({
+                    'W_ID': row[0],
+                    'W_Name': row[1],
+                    'W_Address': row[2],
+                    'W_City':row[3],
+                    'MostExchanges': row[4]
+                })
+            print(result)
             return jsonify(result)
-        except Exception as e:
-            print(f"An error occurred while getting all warehouses: {e}")
-            return jsonify({'error': 'An error occurred while retrieving warehouses'}), 500
+        else:
+            return jsonify("Not found"), 404
 
     def getTop3WarehouseCitiesMostTransactions(self):
         dao = WarehouseDAO()
