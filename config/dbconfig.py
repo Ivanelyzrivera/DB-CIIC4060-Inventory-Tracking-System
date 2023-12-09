@@ -1,6 +1,6 @@
 
 pg_config = {
-    'user' : 'user3',
-    'password' :'user3',
-    'dbname' : 'postgres'
+    'user' : 'ovyyzbvclcabgy',
+    'password' :'02a04b02be1473158c652e275c09b248131e9c431a32c187235adf1d75efb5cd',
+    'dbname' : 'ddi6u4bd9jt764'
 }
