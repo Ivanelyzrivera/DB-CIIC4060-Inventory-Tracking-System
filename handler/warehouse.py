@@ -240,7 +240,11 @@ class WarehouseHandler:
             dbtuples = dao.warehouseBottom3(wid)
             result =[]
             for e in dbtuples:
-                result.append(self.mapToDictPart(e))
+                w_info = {
+                    'P_TYPE' : e[0],
+                    'P_Stock' : e[1]
+                }
+                result.append(w_info)
             return jsonify(result)
         except Exception as e:
             print(f"An error occurred while getting bottom 3 type/material from the warehouses: {e}")
