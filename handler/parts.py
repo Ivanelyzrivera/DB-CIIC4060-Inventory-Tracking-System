@@ -109,12 +109,26 @@ class PartHandler:
         
     def getAllPartsInWarehouse(self, wid):
         dao = PartDAO()
-        result = dao.getAllPartsInWarehouse(wid)
-        if result:
-            parts_list = [self.mapToDict(part) for part in result]
-            return jsonify(parts_list)
-        else:
-            return jsonify("Not found"), 404
+        try:
+            dbtuples = dao.getAllPartsInWarehouse(wid)
+            result = []
+            for e in dbtuples:
+                part_info = {
+                    "P_ID" : e[0],
+                    "P_Type" : e[1],
+                    "P_Color": e[2],
+                    "P_Weight": e[3],
+                    "P_Name": e[4],
+                    "P_Price": e[5],
+                    "P_Manufacturer":e[6],
+                    "W_ID": e[7],
+                    "Stock": e[8]
+                }
+                result.append(part_info)
+            return jsonify(result)
+        except Exception as e:
+            print(f"An error occurred while getting all parts: {e}")
+            return jsonify({'error': 'An error occurred while retrieving parts'}), 500
         
     def partsSupliedBySupplier(self, sid):
         dao = PartDAO()

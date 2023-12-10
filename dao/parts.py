@@ -93,9 +93,11 @@ class PartDAO:
     def getAllPartsInWarehouse(self, wid):
         cursor = self.conn.cursor()
         query = """
-        SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID 
+        SELECT P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID ,sum(R_Stock) as "Stock"
         FROM Part natural inner join warehouse natural inner join rack
-        WHERE W_ID = %s AND  rack.w_id = warehouse.w_id AND rack.p_id = part.p_id
+        WHERE W_ID = %s
+        GROUP BY P_ID, P_Type, P_Color, P_Weight, P_Name, P_Price, P_Manufacturer, W_ID
+        ORDER BY p_id
         """
         try:
             cursor.execute(query, (wid,))
