@@ -61,8 +61,6 @@ class IncomingHandler:
                 else:
                     rackCapacity = quantity*2  # Always have space in new rack, so capacity is double transaction qty
 
-                capacity = rackCapacity
-                stock = quantity
                 rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseID, partID) # Create new rack
 
             else:                                           # rack with selected part exists in selected warehouse

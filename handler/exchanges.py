@@ -1,6 +1,7 @@
 from flask import jsonify
 from dao.exchanges import ExchangeDAO
 from dao.transactions import TransactionDAO
+from dao.racks import RackDAO
 
 class ExchangeHandler:
     
@@ -40,20 +41,63 @@ class ExchangeHandler:
         date = data['T_Date']
         year = data['T_Year']
         quantity = data['T_Quantity']
-        partsID = data['P_ID']
+        partID = data['P_ID']
         warehouseID = data['W_ID']
         userID = data['U_ID']
 
-        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
-        reason = data['E_Reason']
-        warehouseIDdestination = data['W_ID_Destination']
-        userIDdestination = data['U_ID_Destination']
-        if reason and warehouseIDdestination and userIDdestination and transactionID:
-            dao = ExchangeDAO()
-            eid = dao.insertExchange(reason,warehouseIDdestination,userIDdestination,transactionID)
-            data['E_ID'] = eid
-            data['T_ID'] = transactionID
-            return jsonify(data),201
+        dao = ExchangeDAO()
+
+        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partID,warehouseID,userID)
+        foundRack = dao.findRackToPlace(partID, warehouseID)
+
+        rackID = -1
+
+        if transactionID:
+            for e in foundRack:
+                rackID = e[2]
+                rackStock = e[3]
+                rackCapacity = e[4]
+                if rackStock < rackCapacity:
+                    break
+
+            if rackID == -1:                      #if no rack exists in that warehouse with that part
+                if quantity < 500:
+                    rackCapacity = 1000         # Racks should be minimum 1000
+                else:
+                    rackCapacity = quantity*2  # Always have space in new rack, so capacity is double transaction qty
+
+                capacity = rackCapacity
+                stock = quantity
+                rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseID, partID) # Create new rack
+
+            else:                                           # rack with selected part exists in selected warehouse
+                
+                if quantity > (rackCapacity-rackStock):     # If transaction carries more than what fits in rack
+                    quantity -= (rackCapacity-rackStock)    # take what fits in rack
+                    rackStock = rackCapacity                # fill rack
+                    
+                    if quantity < 500:
+                        rackCapacity = 1000
+                    else:
+                        rackCapacity = quantity*2
+                    
+                    filledRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseID, partID)  # Update filled rack
+                    rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseID, partID)      # Create new rack with remainder
+                
+                else:                                                                               # the entirety of the transaction fits in rack
+                    rackStock += quantity                                                           # add quantity to stock
+                    stockedRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseID, partID)      # Update rack with transaction
+
+            reason = data['E_Reason']
+            warehouseIDdestination = data['W_ID_Destination']
+            userIDdestination = data['U_ID_Destination']
+            if reason and warehouseIDdestination and userIDdestination and transactionID:
+                eid = dao.insertExchange(reason,warehouseIDdestination,userIDdestination,transactionID)
+                data['E_ID'] = eid
+                data['T_ID'] = transactionID
+                return jsonify(data),201
+            else:
+                return jsonify("Bad Data or Unexpected attribute values, "), 400
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
         
