@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.incomings import IncomingDAO
+from handler.transactions import TransactionHandler
 
 class IncomingHandler:
     
@@ -35,9 +36,10 @@ class IncomingHandler:
             return jsonify("Not found"), 404
     
     def insertIncoming(self,data):
+        transaction = TransactionHandler().insertTransaction(data)
         rackID = data['R_ID']
         supplierID = data['S_ID']
-        transactionID = data['T_ID']
+        transactionID = transaction['T_ID']
         if rackID and supplierID and transactionID:
             dao = IncomingDAO()
             iid = dao.insertIncoming(rackID,supplierID,transactionID)
