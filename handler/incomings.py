@@ -9,8 +9,7 @@ class IncomingHandler:
         result = {
             'I_ID': t[0],
             'R_ID': t[1],
-            'S_ID': t[2],
-            'T_ID': t[3]
+            'T_ID': t[2]
         }
         return result
 
@@ -45,10 +44,9 @@ class IncomingHandler:
 
         transactionID = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
         rackID = data['R_ID']
-        supplierID = data['S_ID']
-        if rackID and supplierID and transactionID:
+        if rackID and transactionID:
             dao = IncomingDAO()
-            iid = dao.insertIncoming(rackID,supplierID,transactionID)
+            iid = dao.insertIncoming(rackID,transactionID)
             data['I_ID'] = iid
             data['T_ID'] = transactionID
             return jsonify(data),201
@@ -65,11 +63,10 @@ class IncomingHandler:
 
     def putByID(self,iid ,data):
         rackID = data['R_ID']
-        supplierID = data['S_ID']
         transactionID = data['T_ID']
-        if iid and rackID and supplierID and transactionID:
+        if iid and rackID and transactionID:
             dao = IncomingDAO()
-            flag = dao.putByID(iid,rackID,supplierID,transactionID)
+            flag = dao.putByID(iid,rackID,transactionID)
             if flag:
                 return jsonify(data),201
             else:

@@ -12,7 +12,7 @@ class IncomingDAO:
     
     def getAllIncomings(self):
         cursor = self.conn.cursor()
-        query = "SELECT I_ID, R_ID, S_ID, T_ID FROM Incoming;"
+        query = "SELECT I_ID, R_ID, T_ID FROM Incoming;"
         try:
             cursor.execute(query)
             result = []
@@ -27,7 +27,7 @@ class IncomingDAO:
     
     def getincomingbyID(self,iid):
         cursor = self.conn.cursor()
-        query = "SELECT I_ID, R_ID, S_ID, T_ID FROM Incoming where i_id =%s"
+        query = "SELECT I_ID, R_ID, T_ID FROM Incoming where i_id =%s"
         try:
             cursor.execute(query, (iid,))
             result = cursor.fetchone()
@@ -37,10 +37,10 @@ class IncomingDAO:
         finally:
             cursor.close()
 
-    def insertIncoming(self,rackID,supplierID,transactionID):
+    def insertIncoming(self,rackID,transactionID):
         cursor = self.conn.cursor()
-        query = "insert into incoming(R_ID, S_ID, T_ID) values (%s, %s, %s) returning I_ID"
-        cursor.execute(query, (rackID,supplierID,transactionID,))
+        query = "insert into incoming(R_ID, T_ID) values (%s, %s) returning I_ID"
+        cursor.execute(query, (rackID,transactionID,))
         I_ID = cursor.fetchone()[0]
         self.conn.commit()
         return I_ID
@@ -53,10 +53,10 @@ class IncomingDAO:
         self.conn.commit()
         return count
     
-    def putByID(self,iid ,rackID,supplierID,transactionID):
+    def putByID(self,iid ,rackID,transactionID):
         cursor = self.conn.cursor()
-        query = "update incoming set R_ID = %s, S_ID =%s, T_ID = %s where i_id = %s;"
-        cursor.execute(query, (rackID,supplierID,transactionID, iid,))
+        query = "update incoming set R_ID = %s, T_ID = %s where i_id = %s;"
+        cursor.execute(query, (rackID,transactionID, iid,))
         count = cursor.rowcount
         self.conn.commit()
         return count
