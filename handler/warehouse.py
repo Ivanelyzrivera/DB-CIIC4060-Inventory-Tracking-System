@@ -9,6 +9,7 @@ class WarehouseHandler:
         result['W_Name'] = t[1]
         result['W_Address'] = t[2]
         result['W_City'] = t[3]
+        result['W_Budget'] = t[4]
         return result
     
     def mapToDictPart(self,t):
@@ -50,9 +51,10 @@ class WarehouseHandler:
         name = data['W_Name']
         address = data['W_Address']
         city = data['W_City']
-        if  name and address and city:
+        budget = data["W_Budget"]
+        if  name and address and city and budget:
             dao = WarehouseDAO()
-            wid = dao.insertWarehouse(name,address,city)
+            wid = dao.insertWarehouse(name,address,city,budget)
             data['W_ID'] = wid
             return jsonify(data),201
         else:
@@ -71,9 +73,10 @@ class WarehouseHandler:
         name = data['W_Name']
         address = data['W_Address']
         city = data['W_City']
-        if wid and name and address and city:
+        budget = data['W_Budget']
+        if wid and name and address and city and budget:
             dao = WarehouseDAO()
-            flag = dao.putByID(wid, name,address,city)
+            flag = dao.putByID(wid, name,address,city,budget)
             if flag:
                 return jsonify(data),201
             else:
