@@ -43,14 +43,14 @@ class IncomingHandler:
         warehouseID = data['W_ID']
         userID = data['U_ID']
 
-        transaction = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
+        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
         rackID = data['R_ID']
         supplierID = data['S_ID']
-        transactionID = transaction['T_ID']
         if rackID and supplierID and transactionID:
             dao = IncomingDAO()
             iid = dao.insertIncoming(rackID,supplierID,transactionID)
             data['I_ID'] = iid
+            data['T_ID'] = transactionID
             return jsonify(data),201
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400

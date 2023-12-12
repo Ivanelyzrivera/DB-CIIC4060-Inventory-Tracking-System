@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.exchanges import ExchangeDAO
+from dao.transactions import TransactionDAO
 
 class ExchangeHandler:
     
@@ -36,14 +37,22 @@ class ExchangeHandler:
             return jsonify("Not found"), 404
         
     def insertExchange(self,data):
+        date = data['T_Date']
+        year = data['T_Year']
+        quantity = data['T_Quantity']
+        partsID = data['P_ID']
+        warehouseID = data['W_ID']
+        userID = data['U_ID']
+
+        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
         reason = data['E_Reason']
         warehouseIDdestination = data['W_ID_Destination']
         userIDdestination = data['U_ID_Destination']
-        transactionID = data['T_ID']
         if reason and warehouseIDdestination and userIDdestination and transactionID:
             dao = ExchangeDAO()
             eid = dao.insertExchange(reason,warehouseIDdestination,userIDdestination,transactionID)
             data['E_ID'] = eid
+            data['T_ID'] = transactionID
             return jsonify(data),201
         else:
             return jsonify("Bad Data or Unexpected attribute values, "), 400
