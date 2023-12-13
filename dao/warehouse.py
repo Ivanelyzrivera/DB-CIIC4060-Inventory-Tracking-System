@@ -67,7 +67,7 @@ class WarehouseDAO:
         query = """
             SELECT W_ID,W_Name,W_Address,W_City,W_Budget, count(r_id) as Rack_Count
             FROM warehouse NATURAL INNER JOIN rack
-            GROUP BY W_ID,W_Name,W_Address,W_City
+            GROUP BY W_ID,W_Name,W_Address,W_City, W_Budget
             ORDER BY count(r_id) desc
             LIMIT 10
         """

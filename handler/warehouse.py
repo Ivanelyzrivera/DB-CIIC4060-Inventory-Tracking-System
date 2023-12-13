@@ -95,7 +95,8 @@ class WarehouseHandler:
                     'W_Name': row[1],
                     'W_Address': row[2],
                     'W_City':row[3],
-                    'Rack_Count': row[4]
+                    'W_Budget':row[4],
+                    'Rack_Count': row[5]
                 })
             print(result)
             return jsonify(result)
