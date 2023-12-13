@@ -88,34 +88,39 @@ class ExchangeHandler:
                 rackID = e[2]
                 rackStock = e[3]
                 rackCapacity = e[4]
-                if rackStock < rackCapacity:
+
+                if rackID == -1:                      #if no rack exists in that warehouse with that part
+                    if quantity < 500:
+                        rackCapacity = 1000         # Racks should be minimum 1000
+                    else:
+                        rackCapacity = quantity*2  # Always have space in new rack, so capacity is double transaction qty
+
+                    rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseIDdestination, partID) # Create new rack
                     break
 
-            if rackID == -1:                      #if no rack exists in that warehouse with that part
+                else:                                           # rack with selected part exists in selected warehouse
+                    
+                    if quantity > (rackCapacity-rackStock):     # If transaction carries more than what fits in rack
+                        if rackStock < rackCapacity:
+                            quantity -= (rackCapacity-rackStock)    # take what fits in rack
+                            rackStock = rackCapacity                # fill rack
+                            filledRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)  # Update filled rack
+                        rackID = -1
+                        continue
+                    
+                    else:                                                                               # the entirety of the transaction fits in rack
+                        rackStock += quantity                                                           # add quantity to stock
+                        rackID = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)      # Update rack with transaction
+                        break
+
+            else:                               # If all racks are at capacity
                 if quantity < 500:
                     rackCapacity = 1000         # Racks should be minimum 1000
                 else:
                     rackCapacity = quantity*2  # Always have space in new rack, so capacity is double transaction qty
 
+                rackID = -1
                 rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseIDdestination, partID) # Create new rack
-
-            else:                                           # rack with selected part exists in selected warehouse
-                
-                if quantity > (rackCapacity-rackStock):     # If transaction carries more than what fits in rack
-                    quantity -= (rackCapacity-rackStock)    # take what fits in rack
-                    rackStock = rackCapacity                # fill rack
-                    
-                    if quantity < 500:
-                        rackCapacity = 1000
-                    else:
-                        rackCapacity = quantity*2
-                    
-                    filledRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)  # Update filled rack
-                    rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseIDdestination, partID)      # Create new rack with remainder
-                
-                else:                                                                               # the entirety of the transaction fits in rack
-                    rackStock += quantity                                                           # add quantity to stock
-                    stockedRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)      # Update rack with transaction
 
             if reason and warehouseIDdestination and userIDdestination and transactionID:
                 eid = dao.insertExchange(reason,warehouseIDdestination,userIDdestination,transactionID)
