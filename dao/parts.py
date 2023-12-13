@@ -106,7 +106,24 @@ class PartDAO:
         except Exception as e:
             print("An error occurred: ", e)
         finally:
-            cursor.close()       
+            cursor.close()    
+
+    def getPartStockInWarehouse(self, wid,pid):
+        cursor = self.conn.cursor()
+        query = """
+        SELECT P_ID, sum(R_Stock)
+        FROM Part natural inner join warehouse natural inner join rack
+        WHERE W_ID = %s and P_ID = %s
+        GROUP BY p_id
+        """
+        try:
+            cursor.execute(query, (wid,pid,))
+            result = cursor.fetchall()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()   
             
 
     def partsSuppliedBySupplier(self, sid):
