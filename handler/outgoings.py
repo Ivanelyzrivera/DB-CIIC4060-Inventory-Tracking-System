@@ -53,7 +53,7 @@ class OutgoingHandler:
 			break
 
 		if quantity > warehouseStock:
-			return jsonify("Bad Data or Unexpected attribute values, "), 400
+			return jsonify("Bad Data or Unexpected attribute values (Requested quantity larger than warehouse stock), "), 400
 
 		transactionID = TransactionDAO().insertTransaction(date,year,quantity,partID,warehouseID,userID)
 
