@@ -82,10 +82,10 @@ class UserDAO:
     def get3UsersMostExchanges(self, wid):
         cursor = self.conn.cursor()
         query = """
-            select U_ID_Destination as U_ID, count(*) AS exchange_count
-            from Exchange
-            where W_ID_Destination = %s
-            group by U_ID_Destination
+            select U_ID, count(*) AS exchange_count
+            from Exchange natural inner join transaction
+            where W_ID = %s
+            group by U_ID
             order by exchange_count DESC
             limit 3
         """
