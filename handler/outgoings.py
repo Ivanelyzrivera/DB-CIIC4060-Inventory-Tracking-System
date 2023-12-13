@@ -1,6 +1,8 @@
 from flask import jsonify
 from dao.outgoings import OutgoingDAO
 from dao.transactions import TransactionDAO
+from dao.parts import PartDAO
+from dao.racks import RackDAO
 
 class OutgoingHandler:
 
@@ -38,21 +40,52 @@ class OutgoingHandler:
 		date = data['T_Date']
 		year = data['T_Year']
 		quantity = data['T_Quantity']
-		partsID = data['P_ID']
+		partID = data['P_ID']
 		warehouseID = data['W_ID']
 		userID = data['U_ID']
-		
-		transactionID = TransactionDAO().insertTransaction(date,year,quantity,partsID,warehouseID,userID)
-	
-		sellprice = data['O_SellPrice']
-		customer = data['O_Customer']
-		destination = data['O_Destination']
-		if sellprice and customer and destination and transactionID:
-			dao = OutgoingDAO()
-			oid = dao.insertOutgoing(sellprice,customer,destination,transactionID)
-			data['O_ID'] = oid
-			data['T_ID'] = transactionID
-			return jsonify(data),201
+
+		dao = OutgoingDAO()
+
+		warehouseStockRes = PartDAO().getPartStockInWarehouse(warehouseID,partID)
+		warehouseStock = 0
+		for e in warehouseStockRes:
+			warehouseStock = e[1]
+			break
+
+		if quantity > warehouseStock:
+			return jsonify("Bad Data or Unexpected attribute values, "), 400
+
+		transactionID = TransactionDAO().insertTransaction(date,year,quantity,partID,warehouseID,userID)
+
+		foundRackRemove = dao.findRackToPlace(partID, warehouseID)
+		quantityToRemove = quantity
+
+		if transactionID:
+
+			for e in foundRackRemove:
+				rackID = e[2]
+				rackStock = e[3]
+				rackCapacity = e[4]
+				if quantityToRemove >= rackStock:
+					quantityToRemove -= rackStock
+					rackStock = 0
+					emptiedRack = RackDAO().putByID(rackID,rackCapacity,rackStock,warehouseID,partID)
+				else:
+					rackStock -= quantityToRemove
+					quantityToRemove = 0
+					updatedRack = RackDAO().putByID(rackID,rackCapacity,rackStock,warehouseID,partID)
+				
+            
+			sellprice = data['O_SellPrice']
+			customer = data['O_Customer']
+			destination = data['O_Destination']
+			if sellprice and customer and destination and transactionID:
+				oid = dao.insertOutgoing(sellprice,customer,destination,transactionID)
+				data['O_ID'] = oid
+				data['T_ID'] = transactionID
+				return jsonify(data),201
+			else:
+				return jsonify("Bad Data or Unexpected attribute values, "), 400
 		else:
 			return jsonify("Bad Data or Unexpected attribute values, "), 400
 		

@@ -62,3 +62,22 @@ class OutgoingDAO:
         self.conn.commit()
         return count
     
+    def findRackToPlace(self,partID,warehouseID):
+        cursor = self.conn.cursor()
+        query = "SELECT P_ID, W_ID, R_ID, R_Stock, R_Capacity FROM Part natural inner join Rack where p_id =%s and w_id=%s;"
+        try:
+            cursor.execute(query, (partID, warehouseID,))
+            result = []
+            for row in cursor:
+                result.append(row)
+            cursor.close()
+            return result
+        except Exception as e:
+            print("An error occurred: ", e)
+        finally:
+            cursor.close()
+        
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
+    

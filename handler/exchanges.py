@@ -2,6 +2,7 @@ from flask import jsonify
 from dao.exchanges import ExchangeDAO
 from dao.transactions import TransactionDAO
 from dao.racks import RackDAO
+from dao.parts import PartDAO
 
 class ExchangeHandler:
     
@@ -44,15 +45,45 @@ class ExchangeHandler:
         partID = data['P_ID']
         warehouseID = data['W_ID']
         userID = data['U_ID']
+        reason = data['E_Reason']
+        warehouseIDdestination = data['W_ID_Destination']
+        userIDdestination = data['U_ID_Destination']
 
         dao = ExchangeDAO()
 
-        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partID,warehouseID,userID)
-        foundRack = dao.findRackToPlace(partID, warehouseID)
+        warehouseStockRes = PartDAO().getPartStockInWarehouse(warehouseID,partID)
+        warehouseStock = 0
+        for e in warehouseStockRes:
+            warehouseStock = e[1]
+            break
 
-        rackID = -1
+        if quantity > warehouseStock:
+            return jsonify("Bad Data or Unexpected attribute values, "), 400
+        
+        transactionID = TransactionDAO().insertTransaction(date,year,quantity,partID,warehouseID,userID)
+        foundRack = dao.findRackToPlace(partID, warehouseIDdestination)
+
+        foundRackRemove = dao.findRackToPlace(partID, warehouseID)
+        quantityToRemove = quantity
 
         if transactionID:
+
+            for e in foundRackRemove:
+                rackID = e[2]
+                rackStock = e[3]
+                rackCapacity = e[4]
+                if quantityToRemove >= rackStock:
+                    quantityToRemove -= rackStock
+                    rackStock = 0
+                    emptiedRack = RackDAO().putByID(rackID,rackCapacity,rackStock,warehouseID,partID)
+                else:
+                    rackStock -= quantityToRemove
+                    quantityToRemove = 0
+                    updatedRack = RackDAO().putByID(rackID,rackCapacity,rackStock,warehouseID,partID)
+                
+            
+            rackID = -1
+
             for e in foundRack:
                 rackID = e[2]
                 rackStock = e[3]
@@ -66,9 +97,7 @@ class ExchangeHandler:
                 else:
                     rackCapacity = quantity*2  # Always have space in new rack, so capacity is double transaction qty
 
-                capacity = rackCapacity
-                stock = quantity
-                rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseID, partID) # Create new rack
+                rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseIDdestination, partID) # Create new rack
 
             else:                                           # rack with selected part exists in selected warehouse
                 
@@ -81,16 +110,13 @@ class ExchangeHandler:
                     else:
                         rackCapacity = quantity*2
                     
-                    filledRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseID, partID)  # Update filled rack
-                    rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseID, partID)      # Create new rack with remainder
+                    filledRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)  # Update filled rack
+                    rackID = RackDAO().insertRacks(rackCapacity, quantity, warehouseIDdestination, partID)      # Create new rack with remainder
                 
                 else:                                                                               # the entirety of the transaction fits in rack
                     rackStock += quantity                                                           # add quantity to stock
-                    stockedRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseID, partID)      # Update rack with transaction
+                    stockedRack = RackDAO().putByID(rackID,rackCapacity, rackStock, warehouseIDdestination, partID)      # Update rack with transaction
 
-            reason = data['E_Reason']
-            warehouseIDdestination = data['W_ID_Destination']
-            userIDdestination = data['U_ID_Destination']
             if reason and warehouseIDdestination and userIDdestination and transactionID:
                 eid = dao.insertExchange(reason,warehouseIDdestination,userIDdestination,transactionID)
                 data['E_ID'] = eid
