@@ -3,6 +3,7 @@ from dao.outgoings import OutgoingDAO
 from dao.transactions import TransactionDAO
 from dao.parts import PartDAO
 from dao.racks import RackDAO
+from dao.warehouse import WarehouseDAO
 
 class OutgoingHandler:
 
@@ -77,6 +78,9 @@ class OutgoingHandler:
 				
             
 			sellprice = data['O_SellPrice']
+			total_earned = sellprice*quantity
+			sum_budget=total_earned+WarehouseDAO().getwarehousebyID(warehouseID)[4]
+			update = WarehouseDAO().putBudgetByID(sum_budget,warehouseID)
 			customer = data['O_Customer']
 			destination = data['O_Destination']
 			if sellprice and customer and destination and transactionID:

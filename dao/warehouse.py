@@ -260,3 +260,11 @@ ORDER BY ay.T_Year;
         result = cursor.fetchone()
         cursor.close()
         return result
+    
+    def putBudgetByID(self,budget,wid):
+        cursor = self.conn.cursor()
+        query = "update warehouse set W_Budget = %s where w_id = %s;"
+        cursor.execute(query, (budget,wid))
+        count = cursor.rowcount
+        self.conn.commit()
+        return count
