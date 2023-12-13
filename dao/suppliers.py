@@ -65,7 +65,7 @@ class SupplierDAO:
         cursor = self.conn.cursor()
         query = """
             Select s_id, s_name, count(t_id) as transaction_count
-            FROM supplier natural inner join incoming natural inner join transaction
+            FROM supplier natural inner join incoming natural inner join transaction natural inner join part
             where w_id = %s
             group by s_id, s_name
             order by count(t_id) desc
