@@ -83,7 +83,7 @@ class WarehouseDAO:
     def getTop5WarehousesMostIncomings(self):
         cursor = self.conn.cursor()
         query = """
-            SELECT W_ID,W_Name,W_Address,W_City, W_Budget, count(I_ID) as incoming_count
+            SELECT W_ID,W_Name,W_Address,W_City, count(I_ID) as incoming_count
             FROM warehouse NATURAL INNER JOIN transaction NATURAL INNER JOIN incoming
             GROUP BY W_ID,W_Name,W_Address,W_City
             ORDER BY count(I_ID) desc
@@ -101,7 +101,7 @@ class WarehouseDAO:
     def getTop5WarehousesThatDeliverMostExchanges(self): # Top 5 warehouse that delivers the most exchanges
         cursor = self.conn.cursor()
         query = """
-            SELECT W_ID, W_Name, W_Address, W_City,W_Budget COUNT(T_ID) AS MostExchanges
+            SELECT W_ID, W_Name, W_Address, W_City, COUNT(T_ID) AS MostExchanges
             FROM warehouse NATURAL INNER JOIN transaction 
             GROUP BY W_ID,W_Name,W_Address,W_City
             ORDER BY MostExchanges DESC
